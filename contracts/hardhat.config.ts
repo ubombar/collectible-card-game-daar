@@ -12,7 +12,7 @@ import 'hardhat-abi-exporter'
 const config: HardhatUserConfig = {
   solidity: '0.8.19',
   networks: {
-    hardhat: {
+    hardhat:{
       initialBaseFeePerGas: 0,
       gas: 3000000,
       chainId: 1337,
