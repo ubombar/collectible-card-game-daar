@@ -8,11 +8,11 @@ const usersData = [
 
 export const UserInfoPage = () => {
     const { ID } = useParams();
-    console.log(ID)
+    
     if (ID === undefined){
         return (
             <div>
-              <p>Utente non trovato.</p>
+              <p>User not found.</p>
             </div>
           ); 
     }
@@ -20,9 +20,9 @@ export const UserInfoPage = () => {
     return (
         <div>
         <h2>User Details</h2>
-        <p>ID: {user.id}</p>
-        <p>Name: {user.name}</p>
-        <p>Other Info: {user.otherInfo}</p>
+        <p>ID: {user?.id}</p>
+        <p>Name: {user?.name}</p>
+        <p>Other Info: {user?.otherInfo}</p>
         </div>
     );
    

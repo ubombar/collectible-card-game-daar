@@ -9,7 +9,9 @@ import { AdminPage } from "./pages/AdminPage";
 import { UserPage } from "./pages/UserPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { UserInfoPage } from "./pages/UserInfoPage";
-import {BigNumber, utils} from 'ethers'
+import { CardInfoPage } from "./pages/CardInfoPage";
+import { CollectionInfoPage } from "./pages/CollectionInfoPage";
+//import {BigNumber, utils} from 'ethers'
 
 
 
@@ -53,6 +55,8 @@ export const App = () => {
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
+        <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
+        <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
       </Routes>
     </BrowserRouter>
     
