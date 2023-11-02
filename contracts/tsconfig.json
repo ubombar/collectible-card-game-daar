@@ -20,7 +20,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "$/*": ["../typechain/src/*"]
+      "$/*": ["../typechain/src/*"],
+      "react-jsx": [ "./node_modules/@types/react" ]
     }
   },
   "include": ["./test", "./src", "./lib", "./hardhat.config.ts", "./deploy"],

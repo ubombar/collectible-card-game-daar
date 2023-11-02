@@ -3,6 +3,7 @@ import express from 'express';
 import {collection} from './collection/routes';
 import {index} from './routes';
 
+
 class App {
   public server;
 
@@ -15,6 +16,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+ 
   }
 
   routes() {

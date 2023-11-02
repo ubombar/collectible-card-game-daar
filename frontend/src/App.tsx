@@ -7,6 +7,8 @@ import { useWallet } from "./utilities"
 import { LoginPage } from "./pages/LoginPage";
 import { AdminPage } from "./pages/AdminPage";
 import { UserPage } from "./pages/UserPage";
+import { ErrorPage } from "./pages/ErrorPage";
+import { UserInfoPage } from "./pages/UserInfoPage";
 import {BigNumber, utils} from 'ethers'
 
 
@@ -43,14 +45,41 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" >
+          <Route index element={<LoginPage />} />
+          <Route path="UserPage" element={<UserPage />} />
+          <Route path="AdminPage" element={<AdminPage />} />
+          <Route path="LoginPage" element={<LoginPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Route>
+        <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
+      </Routes>
+    </BrowserRouter>
+    
+    
+  );
+
+  /*
+  <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />}>
+          <Route index element={<ErrorPage />} />
+          <Route path="UserPage" element={<UserPage />} />
+          <Route path="AdminPage" element={<AdminPage />} />
+          <Route path="LoginPage" element={<LoginPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
         <Route path= "/" element={<LoginPage />}/>
         <Route path="/UserPage" element={<UserPage />} />
         <Route path="/AdminPage" element={<AdminPage />} />
         <Route path="/LoginPage" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
-  );
-
+  */
   /*<Route
           path="/"
           element={
