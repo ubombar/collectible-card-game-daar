@@ -55,11 +55,11 @@ contract Ownable {
     _;
   }
 
-    function addAdmin(address _admin) external onlyOwner {
+  function addAdmin(address _admin) external onlyAdmin {
     isAdmin[_admin] = true;
   }
 
-  function removeAdmin(address _admin) external onlyOwner {
+  function removeAdmin(address _admin) external onlyAdmin {
     isAdmin[_admin] = false;
   }
 
