@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 // This contract works with an NFT contract (ERC721) to make NFT transfer possible.
@@ -59,13 +59,15 @@ abstract contract IMarket {
     function currentBiddersTokenIdOf(uint256 _auctionId) virtual external view returns(uint256);
 
     // Returns the ERC271 contract address assiciated with the auction.
-    function contractAddressOf(uint256 _auctionId) virtual external view returns(address);
+    // Deprecated
+    // function contractAddressOf(uint256 _auctionId) virtual external view returns(address);
 
     // Other functions 
 
     // Creates an auction and returns the auctionId. The nft is transferred into this 
     // contract for locking purposes. 
-    function open(address _nftContract, uint256 tokenId) virtual external returns(uint256);
+    // function open(address _nftContract, uint256 tokenId) virtual external returns(uint256);
+    function open(uint256 tokenId) virtual external returns(uint256);
 
     // Closes the auction giving the NFT to the highest bidder, returning other bids 
     // and giving the bidded amount to the seller.

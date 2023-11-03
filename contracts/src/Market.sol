@@ -1,10 +1,11 @@
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {IERC721} from "./IERC721.sol";
 import {IMarket} from "./IMarket.sol";
+import {CardContract} from "./CardContract.sol";
 
-contract Marketplace is IMarket {
+contract Market is IMarket {
     struct AuctionInfo {
         address _seller;
         address _bidder;
@@ -12,15 +13,16 @@ contract Marketplace is IMarket {
         uint256 _sellersTokenId;
         uint256 _biddersTokenId;
 
-        address _contractAddress;
         AuctionStatus _status;
     }
 
     uint256 private _auctionCounter;
     mapping(uint256 => AuctionInfo) private _auctions;
     uint256[] private _auctionList;
-
-    constructor() {
+    CardContract private _cardContract;
+    
+    constructor(address cardContract) {
+        _cardContract = CardContract(cardContract);
         _auctionCounter = 0;
     }
 
@@ -142,19 +144,19 @@ contract Marketplace is IMarket {
     }
 
     // Returns the ERC271 contract address assiciated with the auction.
-    function contractAddressOf(uint256 _auctionId) override external view returns(address) {
-        return _auctions[_auctionId]._contractAddress;
-    }
+    // function contractAddressOf(uint256 _auctionId) override external view returns(address) {
+    //     return _auctions[_auctionId]._contractAddress;
+    // }
 
     // Other functions 
 
     // Creates an auction and returns the auctionId. The nft is transferred into this 
-    // contract for locking purposes. 
-    function open(address contractAddress, uint256 tokenId) override external returns(uint256) {
+    // contract for locking purposes.  Old one is deptecated
+    // function open(address contractAddress, uint256 tokenId) override external returns(uint256) {
+    function open(uint256 tokenId) override external returns(uint256) {
         _auctionList.push(_auctionCounter);
         _auctions[_auctionCounter] = AuctionInfo({
             _seller: msg.sender,
-            _contractAddress: contractAddress,
             _status: AuctionStatus.OPEN,
             _bidder: address(0x0),
             _sellersTokenId: tokenId,
@@ -179,9 +181,8 @@ contract Marketplace is IMarket {
         AuctionInfo memory info = _auctions[_auctionId];
 
         // Do the exchange here!
-        // IERC721 contractObject = IERC721(info._contractAddress);
-        // contractObject.safeTransferFrom(info._seller, info._bidder, info._sellersTokenId);
-        // contractObject.safeTransferFrom(info._bidder, info._seller, info._biddersTokenId);
+        _cardContract.safeTransferFrom(info._seller, info._bidder, info._sellersTokenId);
+        _cardContract.safeTransferFrom(info._bidder, info._seller, info._biddersTokenId);
 
         info._status = AuctionStatus.CONCLUDED;
 

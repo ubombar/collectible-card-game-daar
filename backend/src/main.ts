@@ -4,6 +4,7 @@ import {collection} from './collection/routes';
 import {index} from './routes';
 import cors from 'cors';
 
+
 class App {
   public server;
 
