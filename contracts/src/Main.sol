@@ -5,11 +5,13 @@ import "./Collection.sol";
 import "./Ownable.sol";
 import "./CardManager.sol";
 
+import {Market} from "./Market.sol";
 import {IMarket} from "./IMarket.sol";
 
 contract Main is Ownable, CardManager { //is CardContract to inherit Card struct
   uint256 private count;
   CardManager private cardManager;
+  IMarket private marketManager;
   mapping (string => uint256) private collectionNameToId;
   mapping (uint256 => string) private idToCollectionName;
   
@@ -21,6 +23,7 @@ contract Main is Ownable, CardManager { //is CardContract to inherit Card struct
     count = 0;
     isAdmin[msg.sender] = true;
     cardManager = new CardManager(); 
+    marketManager = new Market(cardManager);
   }
 
 //integrate pokemon dataset: parameter cardcount (number of cards in the collection)
