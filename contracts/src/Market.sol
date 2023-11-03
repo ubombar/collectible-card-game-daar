@@ -3,7 +3,7 @@
 pragma solidity ^0.8.19;
 
 import {IMarket} from "./IMarket.sol";
-import {CardContract} from "./CardContract.sol";
+import {CardManager} from "./CardManager.sol";
 
 contract Market is IMarket {
     struct AuctionInfo {
@@ -19,10 +19,10 @@ contract Market is IMarket {
     uint256 private _auctionCounter;
     mapping(uint256 => AuctionInfo) private _auctions;
     uint256[] private _auctionList;
-    CardContract private _cardContract;
+    CardManager private _cardContract;
     
-    constructor(address cardContract) {
-        _cardContract = CardContract(cardContract);
+    constructor(address cardManager) {
+        _cardContract = CardManager(cardManager);
         _auctionCounter = 0;
     }
 
