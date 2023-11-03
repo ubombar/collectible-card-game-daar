@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-//import styles from './styles.module.css'
+import styles from './styles.module.css'
 import * as ethereum from '@/lib/ethereum'
 import * as main from '@/lib/main'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -12,6 +12,24 @@ import { UserInfoPage } from "./pages/UserInfoPage";
 import { CardInfoPage } from "./pages/CardInfoPage";
 import { CollectionInfoPage } from "./pages/CollectionInfoPage";
 
+type Canceler = () => void
+const useAffect = (
+  asyncEffect: () => Promise<Canceler | void>,
+  dependencies: any[] = []
+) => {
+  const cancelerRef = useRef<Canceler | void>()
+  useEffect(() => {
+    asyncEffect()
+      .then(canceler => (cancelerRef.current = canceler))
+      .catch(error => console.warn('Uncatched error', error))
+    return () => {
+      if (cancelerRef.current) {
+        cancelerRef.current()
+        cancelerRef.current = undefined
+      }
+    }
+  }, dependencies)
+}
 
 
 export const App = () => {

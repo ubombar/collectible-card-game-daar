@@ -2,6 +2,7 @@ import express from 'express';
 
 import {collection} from './collection/routes';
 import {index} from './routes';
+import cors from 'cors';
 
 
 class App {
@@ -16,12 +17,12 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
- 
+    this.server.use(cors());
   }
 
   routes() {
     this.server.use("/collection", collection);
-    this.server.use("/", index)
+    this.server.use("/", index);
   }
 }
 
