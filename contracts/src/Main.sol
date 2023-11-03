@@ -5,7 +5,9 @@ import "./Collection.sol";
 import "./Ownable.sol";
 import "./CardContract.sol";
 
-contract Main is Ownable , CardContract{ //is CardContract to inherit Card struct
+import {IMarket} from "./IMarket.sol";
+
+contract Main is Ownable, CardContract { //is CardContract to inherit Card struct
   uint256 private count;
   CardContract private cardContract;
   mapping (string => uint256) private collectionNameToId;
@@ -91,5 +93,4 @@ contract Main is Ownable , CardContract{ //is CardContract to inherit Card struc
     return (cardContract.ownerOf(_cardId) == _user);
   }
 
-  
 }
