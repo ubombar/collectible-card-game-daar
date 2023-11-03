@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "./Collection.sol";
 import "./Ownable.sol";
-import "./CardContract.sol";
+import "./CardManager.sol";
 
 import {IMarket} from "./IMarket.sol";
 
-contract Main is Ownable, CardContract { //is CardContract to inherit Card struct
+contract Main is Ownable, CardManager { //is CardContract to inherit Card struct
   uint256 private count;
-  CardContract private cardContract;
+  CardManager private cardManager;
   mapping (string => uint256) private collectionNameToId;
   mapping (uint256 => string) private idToCollectionName;
   
@@ -20,7 +20,7 @@ contract Main is Ownable, CardContract { //is CardContract to inherit Card struc
   constructor() {
     count = 0;
     isAdmin[msg.sender] = true;
-    cardContract = new CardContract(); 
+    cardManager = new CardManager(); 
   }
 
 //integrate pokemon dataset: parameter cardcount (number of cards in the collection)
@@ -81,16 +81,18 @@ contract Main is Ownable, CardContract { //is CardContract to inherit Card struc
     string memory _cardId,
     address _user
   ) public onlyAdmin {
-    cardContract.mint(_user, _cardId);
+    cardManager.mint(_user, _cardId);
   }
 
-// main wrapper function that calls the CardContract getCardsOfUser
+// main wrapper function that calls the CardManager getCardsOfUser
   function getCardsOfUser(address _user) public view returns (Card[] memory) {
-    return cardContract.userToCards(_user);
+    return cardManager.userToCards(_user);
   }
 
   function userOwnsCard(string memory _cardId, address _user) public view returns (bool){
-    return (cardContract.ownerOf(_cardId) == _user);
+    // retrieve the tokenId
+    uint256 tokenId = cardManager.cardIdToTokenId(_cardId);
+    return (cardManager.ownerOf(tokenId) == _user);
   }
 
 }
