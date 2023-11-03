@@ -2,6 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './styles.module.css'
 import * as ethereum from '@/lib/ethereum'
 import * as main from '@/lib/main'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useWallet } from "./utilities"
+import { LoginPage } from "./pages/LoginPage";
+import { AdminPage } from "./pages/AdminPage";
+import { UserPage } from "./pages/UserPage";
+import { ErrorPage } from "./pages/ErrorPage";
+import { UserInfoPage } from "./pages/UserInfoPage";
+import { CardInfoPage } from "./pages/CardInfoPage";
+import { CollectionInfoPage } from "./pages/CollectionInfoPage";
+//import {BigNumber, utils} from 'ethers'
 
 type Canceler = () => void
 const useAffect = (
@@ -39,103 +49,33 @@ const useWallet = () => {
   }, [details, contract])
 }
 
+
 export const App = () => {
-
   const wallet = useWallet()
-  const adminAccount = wallet?.details.account
-  console.log('Admin', adminAccount)
+  const adminAccount = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
+  
 
-  useEffect(() => {
-    console.log('Wallet', wallet)
-  }, [wallet])
-
-
-  const addCollection = () => {
-    console.log('Add collection', wallet)
-    wallet?.contract
-      .createCollection('collection1', 100)
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch((e: any) => {
-          console.log(e)
-        })
-        .finally(() => {
-          console.log("added collection")
-        })
-  }
-
-  const getAllCollections = () => {
-    console.log('Get all collections')
-    wallet?.contract.getAllCollections().then(console.log).catch(console.error)
-  }
-
-  const mintAndAssignCards = () => {
-    console.log('Mint and assign cards')
-    wallet?.contract
-      .mintAndAssignCards('collection1', ['card1','card2','card3'])
-      .then(console.log)
-      .catch(console.error)
-  }
-
-  const assignCardToAUser = () => {
-    console.log('Assign card to a user')
-    wallet?.contract
-      .assignCardToUser('card2', adminAccount)
-      .then(console.log)
-      .catch(console.error)
-  }
-
-const getCardsOfACollection = () => {
-  console.log('Get cards of a collection')
-  wallet?.contract
-    .getCardsFromCollection('collection1')
-    .then(console.log)
-    .catch(console.error)
-}
-
-const getCardsOfAUser = () => {
-  console.log('Get cards of a user')
-  wallet?.contract
-    .getCardsOfUser(adminAccount)
-    .then(console.log)
-    .catch(console.error)
-}
-
-const userOwnsCard = () => {
-  console.log('User owns card')
-  wallet?.contract
-    .userOwnsCard(adminAccount, 'card2')
-    .then(console.log)
-    .catch(console.error)
-}
-
+  const isEmptyAccount = !wallet?.details.account;
+  const isAdmin = wallet?.details.account ===adminAccount ;
+  console.log("app")
+  //mie modifiche per poter individuare il login in metamask e se non è stato effettuato lo indirizzo alla pagine di login altrimenti se è un admin vado in admin page e se è uno user vado in user page
+  //poi nella login page inserisco uno useAffect che controlli che ci siano state modifiche nell'account e se non ci sono state continua a mostrare please login, mentre se ci sono state rimanda alle due pagine admin e user a seconda dell'utente loggato
+  //inserire una default page per indirizzi non validi e poi un aggiornamento della pagina nel caso in cui un utente dovesse cambiare account e per esempio passare da admin a user
   return (
-    <div className={styles.body}>
-      <h1>Welcome to Pokémon TCG</h1>
-      <div>
-        <button type="button" onClick={addCollection}>
-          Add collection{' '}
-        </button>
-        <button type="button" onClick={getAllCollections}>
-          collections{' '}
-        </button>
-        <button type="button" onClick={mintAndAssignCards}>
-          Mint and assign cards{' '}
-          </button>
-          <button type="button" onClick={getCardsOfACollection}>
-          Retrieve cards from a collection name{' '}
-          </button>
-          <button type="button" onClick={assignCardToAUser}>
-          Assign a card to a user{' '}
-          </button>
-          <button type="button" onClick={getCardsOfAUser}>
-          Retrieve cards Of a user address{' '}
-          </button>
-          <button type="button" onClick={userOwnsCard}>
-          User owns a card{' '}
-          </button>
-      </div>
-    </div>
-  )
-}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" >
+          <Route index element={<LoginPage />} />
+          <Route path="UserPage" element={<UserPage />} />
+          <Route path="AdminPage" element={<AdminPage />} />
+          <Route path="LoginPage" element={<LoginPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Route>
+        <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
+        <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
+        <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
+      </Routes>
+    </BrowserRouter>
+    
+    
+  );
