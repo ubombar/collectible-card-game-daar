@@ -19,10 +19,10 @@ contract Market is IMarket {
     uint256 private _auctionCounter;
     mapping(uint256 => AuctionInfo) private _auctions;
     uint256[] private _auctionList;
-    CardManager private _cardContract;
+    CardManager private _cardManager;
     
     constructor(CardManager cardManager) {
-        _cardContract = cardManager;
+        _cardManager = cardManager;
         _auctionCounter = 0;
     }
 
@@ -181,8 +181,8 @@ contract Market is IMarket {
         AuctionInfo memory info = _auctions[_auctionId];
 
         // Do the exchange here!
-        _cardContract.safeTransferFrom(info._seller, info._bidder, info._sellersTokenId);
-        _cardContract.safeTransferFrom(info._bidder, info._seller, info._biddersTokenId);
+        _cardManager.safeTransferFrom(info._seller, info._bidder, info._sellersTokenId);
+        _cardManager.safeTransferFrom(info._bidder, info._seller, info._biddersTokenId);
 
         info._status = AuctionStatus.CONCLUDED;
 
@@ -236,6 +236,9 @@ contract Market is IMarket {
         info._biddersTokenId = _tokenId;
 
         _auctions[_auctionId] = info;
+
+        _cardManager.setApprovalForAll(msg.sender, true);
+        _cardManager.approve(address(this), _tokenId);
 
         emit AuctionNewOffer(_auctionId, msg.sender);
     }
