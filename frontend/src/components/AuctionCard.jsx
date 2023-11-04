@@ -22,7 +22,7 @@ export default function AuctionCard({data: { cardName, from, sellersTokenId, auc
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={() => {naviage("/BifforAuctionPage/" + auctionId)}} size="small">Offer a Card for Exchange</Button>
+                <Button onClick={() => {naviage("/BidforAuctionPage/" + auctionId)}} size="small">Offer a Card for Exchange</Button>
                 <Button onClick={() => {naviage("/AuctionInfoPage/" + auctionId)}} size="small">See Details</Button>
             </CardActions>
         </React.Fragment>

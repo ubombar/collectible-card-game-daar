@@ -60,7 +60,7 @@ export const App = () => {
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
         <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
         <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
-        <Route path="/BifforAuctionPage/:ID" element={<BidforAuctionPage />} />
+        <Route path="/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
         <Route path="/AuctionInfoPage/:ID" element={<AuctionInfoPage />} />
       </Routes>
     </BrowserRouter>
