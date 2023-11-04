@@ -10,7 +10,8 @@ import { UserPage } from "./pages/UserPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { UserInfoPage } from "./pages/UserInfoPage";
 import { CardInfoPage } from "./pages/CardInfoPage";
-import { CollectionInfoPage } from "./pages/CollectionInfoPage";
+import { CollectionInfoPage } from "./pages/CollectionInfoPage"
+import { MintingPage } from "./pages/MintingPage";
 
 type Canceler = () => void
 const useAffect = (
@@ -54,6 +55,7 @@ export const App = () => {
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
         <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
         <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
+        <Route path="/MintingPage" element={<MintingPage />} />
       </Routes>
     </BrowserRouter>
     

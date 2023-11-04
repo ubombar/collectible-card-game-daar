@@ -56,8 +56,7 @@ export const AdminPage = () => {
 
 
   const handleMintClick = () => {
-    console.log('Mint button clicked');
-    //what do I do??
+    navigate('/MintingPage');
   };
   
   return(
