@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import { List, ListItem, Checkbox, TextField } from '@mui/material';
 
 const SelectCardsStep = ({ cards, isComplete, max }) => {
@@ -58,12 +58,12 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
   );
 };
 
-export default SelectCardsStep;
+export default SelectCardsStep;*/
 //use the transfer list
 //add the constraint on the maximum number of cards to be selected which comes from the previous step
-/*import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
-import TransferList from './TransferList'; // Assicurati di importare il tuo componente TransferList
+import TransferList from '../components/TransferList';
 
 const SelectCardsStep = ({ cards, isComplete, max }) => {
   const [selectedCards, setSelectedCards] = useState([]);
@@ -103,12 +103,12 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
         />
       </div>
       <TransferList
-        left={cards} // Passa i dati a TransferList
-        right={selectedCards}
+        left={cards.filter((card) =>card.url.toLowerCase().includes(cardSearchText.toLowerCase()))}
+        right={cards.filter((card)=>selectedCards.includes(card.id))}
         handleToggle={handleToggle}
       />
     </div>
   );
 };
 
-export default SelectCardsStep;*/
+export default SelectCardsStep;

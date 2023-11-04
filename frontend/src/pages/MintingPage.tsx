@@ -77,7 +77,7 @@ export const MintingPage = () => {
           </div>
         ) : (
           <div>
-            <Typography>{getStepContent(activeStep)}</Typography>
+            <Typography component={'span'}>{getStepContent(activeStep)}</Typography>
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack}>
                 Back
