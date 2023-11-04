@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import ShowPath from '../components/ShowPath';
 
 const collectionsData = [
     {
@@ -50,6 +51,7 @@ export const CardInfoPage = () => {
     return (
         <div>
         <h1>Card Info Page</h1>
+        <ShowPath />
         <p>Card ID: {card?.id}</p> 
         <p>Card URL: {card?.url}</p>
         </div>

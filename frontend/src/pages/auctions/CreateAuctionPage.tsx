@@ -1,8 +1,10 @@
+import ShowPath from "../../components/ShowPath";
 
 export const CreateAuctionPage = () => {
     return (
         <div>
-            Copy stuff from cri.
+                <ShowPath />
+            Copy stuff from crist.
         </div>
     );
 }
