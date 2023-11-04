@@ -11,7 +11,6 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { UserInfoPage } from "./pages/UserInfoPage";
 import { CardInfoPage } from "./pages/CardInfoPage";
 import { CollectionInfoPage } from "./pages/CollectionInfoPage";
-//import {BigNumber, utils} from 'ethers'
 
 type Canceler = () => void
 const useAffect = (
@@ -41,9 +40,7 @@ export const App = () => {
   const isEmptyAccount = !wallet?.details.account;
   const isAdmin = wallet?.details.account ===adminAccount ;
   console.log("app")
-  //mie modifiche per poter individuare il login in metamask e se non è stato effettuato lo indirizzo alla pagine di login altrimenti se è un admin vado in admin page e se è uno user vado in user page
-  //poi nella login page inserisco uno useAffect che controlli che ci siano state modifiche nell'account e se non ci sono state continua a mostrare please login, mentre se ci sono state rimanda alle due pagine admin e user a seconda dell'utente loggato
-  //inserire una default page per indirizzi non validi e poi un aggiornamento della pagina nel caso in cui un utente dovesse cambiare account e per esempio passare da admin a user
+
   return (
     <BrowserRouter>
       <Routes>
