@@ -15,6 +15,7 @@ import { AuctionPage } from './pages/auctions/AuctionPage';
 import { BidforAuctionPage } from './pages/auctions/BidforAuctionPage';
 import { CreateAuctionPage } from './pages/auctions/CreateAuctionPage';
 import {AuctionInfoPage} from './pages/auctions/AuctionInfoPage';
+import { MintingPage } from "./pages/MintingPage";
 
 type Canceler = () => void
 const useAffect = (
@@ -62,6 +63,7 @@ export const App = () => {
         <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
         <Route path="/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
         <Route path="/AuctionInfoPage/:ID" element={<AuctionInfoPage />} />
+        <Route path="/MintingPage" element={<MintingPage />} />
       </Routes>
     </BrowserRouter>
     
