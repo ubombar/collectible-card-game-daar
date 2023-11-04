@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CardManager is Ownable, ERC721 {
   struct Card {
@@ -21,7 +21,7 @@ contract CardManager is Ownable, ERC721 {
   uint256 public numberOfCollections; //number of created collections
 
 
-  constructor() ERC721("Card", "Cardsymbol") {
+  constructor() ERC721("Card", "Cardsymbol") Ownable(msg.sender){
     mintedCardNumber = 0;
     numberOfCollections = 0;
   }
@@ -72,7 +72,6 @@ contract CardManager is Ownable, ERC721 {
     string memory _collectionName,
     uint256 _cardNumberMax
   ) external {
-    // collectionNameToCards[_collectionName]=new Card[](uint256(_cardNumberMax));
     collectionNameToCardNumber[_collectionName] = _cardNumberMax;
     idToCollectionName[numberOfCollections] = _collectionName;
     numberOfCollections++;
