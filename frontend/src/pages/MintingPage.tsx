@@ -5,6 +5,8 @@ import CreateCollectionStep from '../components/CreateCollectionStep';
 import SelectCardsStep from '../components/SelectCardsStep';
 import SelectUserStep from '../components/SelectUserStep';
 
+import ShowPath from '../components/ShowPath';
+
 const allCards = [
     {
         id: 1,
@@ -63,6 +65,7 @@ export const MintingPage = () => {
   
   return (
     <Container>
+     <ShowPath />
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

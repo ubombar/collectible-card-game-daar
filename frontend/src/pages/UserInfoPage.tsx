@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import ShowPath from '../components/ShowPath';
 
 const usersData = [
     { id: 1, name: 'User 1', otherInfo: '...'},
@@ -20,6 +21,7 @@ export const UserInfoPage = () => {
     return (
         <div>
         <h2>User Details</h2>
+        <ShowPath />
         <p>ID: {user?.id}</p>
         <p>Name: {user?.name}</p>
         <p>Other Info: {user?.otherInfo}</p>

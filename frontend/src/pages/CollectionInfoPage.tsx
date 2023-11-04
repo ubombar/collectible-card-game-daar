@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
+import ShowPath from '../components/ShowPath';
 const collectionsData = [
     {
       name: 'Collection 1',
@@ -49,6 +49,7 @@ export const CollectionInfoPage = () => {
     return (
         <div>
         <h1>Collection Info Page</h1>
+        <ShowPath />
         <p>Collection Name: {collection?.name}</p> 
         <p>Collection Number of Cards: {collection?.cardsCount}</p>
         </div>
