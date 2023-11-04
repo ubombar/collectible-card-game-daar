@@ -11,7 +11,6 @@ export const BidforAuctionPage = () => {
     const wallet = useWallet();
     const navigate = useNavigate();
 
-
     return (
         <div className={styles.body}>
             Auction bid page
