@@ -1,5 +1,5 @@
 // ActiveLastBreadcrumb.js
-import {  useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as React from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
@@ -14,26 +14,31 @@ const ShowPath = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const lastPage = currentPath.substring(currentPath.lastIndexOf("/") + 1);
   const pageList = currentPath.split("/");
-  pageList.shift();
+  pageList.shift(); // pops first element
 
-  console.log(currentPath);
+  function getFirstNElements(i) {
+    if (i <= pageList.length) {
+      return "/" + pageList.slice(0, i + 1).join("/");
+    } else {      
+      return "/" + pageList.join("/");
+    }
+  }  
 
   return (
-    <div role="presentation" onClick={handleClick}>
+    <div role="presentation">
       <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/">
           Home
         </Link>
 
-          {pageList.map((e) => {
-              return (
-                <Link underline="hover" color="inherit" href={currentPath}>
-                  {e}
-                </Link>
-              );
-            })}
+        {pageList.map((e, i) => {
+          return (
+            <Link underline="hover" color="inherit" href={getFirstNElements(i)}>
+              {e}
+            </Link>
+          );
+        })}
 
       </Breadcrumbs>
     </div>
