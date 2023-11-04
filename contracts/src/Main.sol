@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./CardManager.sol";
 
 import {Market} from "./Market.sol";
@@ -13,9 +13,8 @@ contract Main is Ownable {
   IMarket public marketManager;
 
 
-  constructor() {
+  constructor() Ownable(msg.sender){
     count = 0;
-    isAdmin[msg.sender] = true;
     cardManager = new CardManager(); 
     marketManager = new Market(cardManager);
   }
