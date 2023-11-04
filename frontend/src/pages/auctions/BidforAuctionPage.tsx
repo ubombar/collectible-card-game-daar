@@ -1,3 +1,5 @@
+import ShowPath from "../../components/ShowPath";
+
 // import { useWallet } from '@/utilities';
 // import styles from '../../styles.module.css'
 // import { Button, Grid, ListItem } from '@mui/material';
@@ -97,6 +99,9 @@
 
 export const BidforAuctionPage = () => {
   return (
-    <p>Test</p>
+    <div>
+          <ShowPath />
+          <p>Test</p>
+    </div>
   );
 }

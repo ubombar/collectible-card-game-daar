@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import AuctionView from '@/components/AuctionView';
+import ShowPath from "../../components/ShowPath";
 
 var auctionList = [
     {
@@ -33,11 +34,12 @@ export const AuctionPage = () => {
     const navigate = useNavigate();
 
     function handleCreateAuction() {
-        navigate("/CreateAuctionPage");
+        navigate("/UserPage/AuctionPage/CreateAuctionPage");
     }
 
     return (
         <div className={styles.body}>
+                <ShowPath />
         <Grid container spacing={3}>
             <Grid item xs={12} style={{ alignItems: 'center' }}>
                 <Button style={{width: '100%'}} variant="contained" color="secondary" onClick={handleCreateAuction}>
@@ -46,7 +48,7 @@ export const AuctionPage = () => {
             </Grid>
             
             <Grid item xs={12}>
-                <AuctionView auctionCollection={auctionList} naviage={navigate}></AuctionView>
+                <AuctionView auctionCollection={auctionList} navigate={navigate}></AuctionView>
             </Grid>
         </Grid>
         </div>

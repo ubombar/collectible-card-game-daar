@@ -1,7 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import styles from './styles.module.css'
-import * as ethereum from '@/lib/ethereum'
-import * as main from '@/lib/main'
+import { useEffect, useMemo, useRef, useState, ReactNode } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useWallet } from "./utilities"
 import { LoginPage } from "./pages/LoginPage";
@@ -36,14 +33,12 @@ const useAffect = (
   }, dependencies)
 }
 
-
 export const App = () => {
   const wallet = useWallet()
   const adminAccount = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
-  
 
   const isEmptyAccount = !wallet?.details.account;
-  const isAdmin = wallet?.details.account === adminAccount ;
+  const isAdmin = wallet?.details.account === adminAccount;
   console.log("app")
 
   return (
@@ -51,23 +46,22 @@ export const App = () => {
       <Routes>
         <Route path="/" >
           <Route index element={<LoginPage />} />
-          <Route path="UserPage" element={<UserPage />} />
-          <Route path="AdminPage" element={<AdminPage />} />
-          <Route path="LoginPage" element={<LoginPage />} />
-          <Route path="AuctionPage" element={<AuctionPage />} />
-          <Route path="CreateAuctionPage" element={<CreateAuctionPage />} />
+          <Route path="/UserPage" element={<UserPage />} />
+          <Route path="/AdminPage" element={<AdminPage />} />
+          <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
         <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
         <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
-        <Route path="/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
         <Route path="/AuctionInfoPage/:ID" element={<AuctionInfoPage />} />
-        <Route path="/MintingPage" element={<MintingPage />} />
+
+        <Route path="/UserPage/AuctionPage" element={<AuctionPage />} />
+        <Route path="/UserPage/AuctionPage/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
+        <Route path="/UserPage/AuctionPage/CreateAuctionPage" element={<CreateAuctionPage />} />
+        <Route path="/AdminPage/MintingPage" element={<MintingPage />} />
       </Routes>
     </BrowserRouter>
-    
-    
   );
 
 }
