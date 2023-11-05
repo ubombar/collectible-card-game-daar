@@ -25,35 +25,34 @@ const ShowPath = () => {
     }
   }
 
-  console.log(currentPath);
-  console.log(currentPath != "/");
-
-
   return (
     <div role="presentation">
-      <Breadcrumbs aria-label="breadcrumb">
-
-        {currentPath != "/" ?
-          <div>
-            <Link underline="hover" color="inherit" href="/">
-              Home
-            </Link>
-            {pageList.map((e, i) => {
-              return (
-                <Link underline="hover" color="inherit" href={getFirstNElements(i)}>
-                  {e}
-                </Link>
-              );
-            })}
-          </div>
-          : <div>
-            <Link underline="hover" color="inherit" href="/">
-              Home
-            </Link>
-          </div>}
-      </Breadcrumbs>
+    {
+      currentPath == "/" ? (
+      <div>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            Home
+          </Link>
+        </Breadcrumbs>
+      </div>) : (
+      <div>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            Home
+          </Link>
+          {pageList.map((e, i) => {
+            return (
+              <Link underline="hover" color="inherit" href={getFirstNElements(i)}>
+                {e}
+              </Link>
+            );
+          })}
+        </Breadcrumbs>
+      </div>)
+    }
     </div>
   );
 }
-export default ShowPath;
 
+export default ShowPath;
