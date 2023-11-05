@@ -42,7 +42,7 @@ const CardMTG = ({id}) => {
                 component="img"
                 height="500"
                 image={cardData?.imageUrl}
-                alt="image url not found"
+                alt="Loading card..."
             />
         </Card>
     ) : (<p>loading card</p>))
