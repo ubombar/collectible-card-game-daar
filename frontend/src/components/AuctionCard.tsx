@@ -2,7 +2,16 @@ import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { CardContent, CardActions, Typography, Button, Paper } from '@mui/material';
 
-export default function AuctionCard({ data: { cardName, from, sellersTokenId, auctionId }, navigate }) {
+// auctionId: auctionId,
+// statusInt: statusInt,
+// status: statusToString[statusInt],
+// sellerAddress: await wallet.marketContract.sellerOf(auctionId),
+// biddderAddress: await wallet.marketContract.currentBidderOf(auctionId),
+// sellersToken: await wallet.marketContract.sellersTokenIdOf(auctionId),
+// biddersToken: await wallet.marketContract.currentBiddersTokenIdOf(auctionId),
+// hasBidder: biddersAddress.includes("0x0000000000000000000000000000000000000000"),
+
+export default function AuctionCard({ data: { auctionId, statusInt, status, sellerAddress, biddderAddress, sellersToken, biddersToken, hasBidder }, navigate }) {
     const theme = useTheme();
 
     return (
@@ -10,13 +19,16 @@ export default function AuctionCard({ data: { cardName, from, sellersTokenId, au
             <Paper>
                 <CardContent>
                     <Typography variant="h5" component="div">
-                        Offering: <a href={"/CardInfoPage/" + cardName}>{cardName}</a>
+                        Offering: <a href={"/CardInfoPage/" + sellersToken}>{sellersToken}</a>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        From: <a href={"/UserInfoPage/" + from}>{from}</a>
+                        From: <a href={"/UserInfoPage/" + sellerAddress}>{sellerAddress}</a>
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        TokenId: {sellersTokenId}
+                        TokenId: {sellersToken}
+                    </Typography>
+                    <Typography variant="body2">
+                        {status}
                     </Typography>
                     <Typography variant="body2">
                         {auctionId}

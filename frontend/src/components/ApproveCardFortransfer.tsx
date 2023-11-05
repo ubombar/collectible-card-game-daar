@@ -3,16 +3,21 @@ import { TextField, Button, ListItem, Checkbox, ListItemText, Paper, List, Typog
 import TransferList from '../components/TransferList';
 import { Check, CheckBox, Label, LabelImportant } from '@mui/icons-material';
 import AuctionCard from './AuctionCard';
+import { useWallet } from '@/utilities';
 
 export const ApproveCardForTransferStep = ({ setPassable, selectedCard }) => {
+    const wallet = useWallet();
     const [approved, setApproved] = useState(false);
     function handleApproveClick() {
         // Call to the CardContact
         // Then make the passableTrue
+        wallet?.cardmanagerContract.approve(wallet.marketContract.address, selectedCard.tokenId).then((r) => {
+            handleApproveClickCheckbox()
+        })
 
         console.log("Approved!");
         // For now just approve
-        handleApproveClickCheckbox()
+        
     }
 
     function handleApproveClickCheckbox() {

@@ -8,52 +8,86 @@ import { CardContent, CardActions, Typography } from '@mui/material';
 import AuctionCard from '@/components/AuctionCard';
 import ShowPath from "../../components/ShowPath";
 import AuctionCardDetailed from '@/components/AuctionCardDetailed';
+import { ethers } from 'ethers';
 
 const mockDataAuction = {
     cardName: "Zattirizortzort",
     from: "0x38d4BAd320711715F4f3B6F41916762e5f2E2F84",
     sellersTokenId: 23,
     auctionId: 2,
-    biddedCardName: "Pika Pika", 
-    bidder: "0x47a45BAd320711715F4f3B6F234234135323125", 
-    biddersTokenId: 42 
+    biddedCardName: "Pika Pika",
+    bidder: "0x47a45BAd320711715F4f3B6F234234135323125",
+    biddersTokenId: 42
 };
+
+
+
+
 
 export const AuctionInfoPage = () => {
     const { ID } = useParams();
+    let auctionId = parseInt(ID || "");
     const navigate = useNavigate();
     const [noBidder, setNoBidder] = useState(false);
     const [showOffer, setShowOffer] = useState(false);
     const wallet = useWallet();
+    const [auctionData, setAuctionData] = useState({
+        sellerAddress: "0x0000000000000000000000000000000000000000"
+    });
 
     // Get the auction id info
     function acceptAndExchange() {
-        
+
     }
 
     function rejectOffer() {
-        
+
     }
 
     function cancelAuction() {
-        
+
     }
+
+    wallet?.marketContract.list().then(async (ret: ethers.BigNumber[]) => {
+        let statusToString = {
+            0: "Not Open",
+            1: "Open",
+            2: "Concluded",
+            3: "Cancelled"
+        }
+
+        let statusInt = await wallet.marketContract.statusOf();
+        let biddersAddress: string = await wallet.marketContract.currentBidderOf(auctionId);
+
+        let auctionItem = {
+            auctionId: auctionId,
+            statusInt: statusInt,
+            status: statusToString[statusInt], // ignore the warning
+            sellerAddress: await wallet.marketContract.sellerOf(auctionId),
+            biddderAddress: await wallet.marketContract.currentBidderOf(auctionId),
+            sellersToken: (await wallet.marketContract.sellersTokenIdOf(auctionId)).toString(),
+            biddersToken: (await wallet.marketContract.currentBiddersTokenIdOf(auctionId)).toString(),
+            hasBidder: !biddersAddress.includes("0x0000000000000000000000000000000000000000"),
+        }
+
+        setAuctionData(auctionItem);
+    })
 
     return (
         <Grid container spacing={3}>
             <ShowPath />
             <Grid item xs={12}>
                 <h1>Auction Info</h1>
-                <AuctionCardDetailed data={mockDataAuction} navigate={navigate} noBidder={noBidder} showOffer={showOffer}></AuctionCardDetailed>
+                <AuctionCardDetailed data={auctionData} navigate={navigate} noBidder={noBidder} showOffer={showOffer}></AuctionCardDetailed>
             </Grid>
             <Grid item xs={4}>
-                <Button onClick={acceptAndExchange} disabled={wallet?.details.account?.toLowerCase() == mockDataAuction.from}>Accept and Exchange</Button>
+                <Button onClick={acceptAndExchange} disabled={wallet?.details.account?.toLowerCase() == auctionData.sellerAddress}>Accept and Exchange</Button>
             </Grid>
             <Grid item xs={4}>
-                <Button onClick={rejectOffer} disabled={wallet?.details.account?.toLowerCase() == mockDataAuction.from}>Reject</Button>
+                <Button onClick={rejectOffer} disabled={wallet?.details.account?.toLowerCase() == auctionData.sellerAddress}>Reject</Button>
             </Grid>
             <Grid item xs={4}>
-                <Button onClick={cancelAuction} disabled={wallet?.details.account?.toLowerCase() == mockDataAuction.from}>Cancel Auction</Button>
+                <Button onClick={cancelAuction} disabled={wallet?.details.account?.toLowerCase() == auctionData.sellerAddress}>Cancel Auction</Button>
             </Grid>
         </Grid>
     );

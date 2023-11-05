@@ -43,9 +43,12 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
     const navigate = useNavigate()
     const wallet = useWallet();
 
-    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((cardArray: {id: string, tokenId: ethers.BigNumber}[]) => {
-        cardArray = cardArray.map((card) => {
-            return { ...card, ...{tokenId: card.tokenId.toNumber()} }
+    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((stringOfNames: string[]) => {
+        stringOfNames = stringOfNames.map((strName) => {
+            return {
+                id: strName
+
+            }
         })
         setAllCards(cardArray);
     })
@@ -56,7 +59,11 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
             setPassable(false);
         } else {
             // Call the create auction here!
-            navigate("/UserPage/AuctionPage")
+            wallet?.marketContract.open(selectedCard.tokenId).then((r) => {
+                console.log(r);
+                
+                navigate("/UserPage/AuctionPage")
+            })
         }
     };
 
