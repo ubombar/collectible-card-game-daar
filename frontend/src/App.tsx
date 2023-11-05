@@ -13,6 +13,7 @@ import { BidforAuctionPage } from './pages/auctions/BidforAuctionPage';
 import { CreateAuctionPage } from './pages/auctions/CreateAuctionPage';
 import {AuctionInfoPage} from './pages/auctions/AuctionInfoPage';
 import { MintingPage } from "./pages/MintingPage";
+import { BoosterPage } from "./pages/BoosterPage";
 
 type Canceler = () => void
 const useAffect = (
@@ -37,6 +38,7 @@ export const App = () => {
   const wallet = useWallet()
   const adminAccount = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
 
+
   const isEmptyAccount = !wallet?.details.account;
   const isAdmin = wallet?.details.account === adminAccount;
   console.log("app")
@@ -49,6 +51,10 @@ export const App = () => {
           <Route path="/UserPage" element={<UserPage />} />
           <Route path="/AdminPage" element={<AdminPage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
+          <Route path="UserPage" element={<UserPage />} />
+          <Route path="AdminPage" element={<AdminPage />} />
+          <Route path="LoginPage" element={<LoginPage />} />
+          <Route path="BoosterPage" element={<BoosterPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
@@ -62,6 +68,8 @@ export const App = () => {
         <Route path="/AdminPage/MintingPage" element={<MintingPage />} />
       </Routes>
     </BrowserRouter>
+
+
   );
 
 }
