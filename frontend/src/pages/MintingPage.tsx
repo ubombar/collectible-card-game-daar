@@ -74,7 +74,7 @@ export const MintingPage = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setPassable(false);
       } else if (activeStep == 2) {
-        const waitpromise: Promise[] = [];
+        const waitpromise: Promise<any>[] = [];
         // Mint the selected cards for the selected user
         for (var cardId in selectedCards) {
           waitpromise.push(wallet?.cardmanagerContract.mint(selectedUser, cardId, selectedCollection.id))
