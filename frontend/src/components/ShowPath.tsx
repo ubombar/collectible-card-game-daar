@@ -20,28 +20,39 @@ const ShowPath = () => {
   function getFirstNElements(i) {
     if (i <= pageList.length) {
       return "/" + pageList.slice(0, i + 1).join("/");
-    } else {      
+    } else {
       return "/" + pageList.join("/");
     }
-  }  
+  }
 
   return (
     <div role="presentation">
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-
-        {pageList.map((e, i) => {
-          return (
-            <Link underline="hover" color="inherit" href={getFirstNElements(i)}>
-              {e}
-            </Link>
-          );
-        })}
-
-      </Breadcrumbs>
+    {
+      currentPath == "/" ? (
+      <div>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            Home
+          </Link>
+        </Breadcrumbs>
+      </div>) : (
+      <div>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            Home
+          </Link>
+          {pageList.map((e, i) => {
+            return (
+              <Link underline="hover" color="inherit" href={getFirstNElements(i)}>
+                {e}
+              </Link>
+            );
+          })}
+        </Breadcrumbs>
+      </div>)
+    }
     </div>
   );
 }
+
 export default ShowPath;
