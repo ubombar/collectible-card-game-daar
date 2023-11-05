@@ -16,7 +16,7 @@ const AuctionView = ({auctionCollection, navigate}) => {
                     return collection.cardName.toLowerCase().includes(searchText.toLowerCase());
                   });
     return (
-        <Grid container spacing={0}r>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <h2>Open Auctions</h2>
             </Grid>
