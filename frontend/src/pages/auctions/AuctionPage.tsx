@@ -42,7 +42,7 @@ export const AuctionPage = () => {
     // useEffect(() => {
 
     // }, [wallet])
-    wallet?.marketContract.listOpenOnly().then((listOfOpenAuctionIds) => {
+    wallet?.marketContract.list().then((listOfOpenAuctionIds) => {
         listOfOpenAuctionIds = listOfOpenAuctionIds.map((e) => { return e.toNumber() })
         let statusToString = {
             0: "Not Open",
