@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as ethereum from '@/lib/ethereum'
 import * as main from '@/lib/main'
+import * as cardmanager from '@/lib/cardmanager'
+import * as market from '@/lib/market'
 
 import { NavigateFunction } from 'react-router-dom';
 
@@ -25,19 +27,30 @@ const useAffect = (
 
 export const useWallet = () => {
     const [details, setDetails] = useState<ethereum.Details>()
-    const [contract, setContract] = useState<main.Main>()
+    const [mainContract, setMainContract] = useState<main.Main>()
+    const [cardmanagerContract, setCardManagerContract] = useState<cardmanager.CardManager>()
+    const [marketContract, setMarketContract] = useState<market.Market>()
+    
     useAffect(async () => {
       const details_ = await ethereum.connect('metamask')
       if (!details_) return
       setDetails(details_)
-      const contract_ = await main.init(details_)
-      if (!contract_) return
-      setContract(contract_)
+
+      const mainContract_ = await main.init(details_)
+      const cardmanagerContract_ = await cardmanager.init(details_)
+      const marketContract_ = await market.init(details_)
+
+      if (!mainContract_) return
+      setMainContract(mainContract_)
+      if (!cardmanagerContract_) return
+      setCardManagerContract(cardmanagerContract_)
+      if (!marketContract_) return
+      setMarketContract(marketContract_)
     }, [])
     return useMemo(() => {
-      if (!details || !contract) return
-      return { details, contract }
-    }, [details, contract])
+      if (!details || !mainContract || !cardmanagerContract || !marketContract) return
+      return { details, mainContract, cardmanagerContract, marketContract }
+    }, [details, mainContract, cardmanagerContract, marketContract])
   }
 
 export const checkAccount=(navigate: NavigateFunction)=>{
