@@ -62,7 +62,7 @@ export default SelectCardsStep;*/
 //use the transfer list
 //add the constraint on the maximum number of cards to be selected which comes from the previous step
 import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Alert, AlertTitle } from '@mui/material';
 import TransferList from '../components/TransferList';
 
 const SelectCardsStep = ({ cards, isComplete, max }) => {
@@ -92,7 +92,12 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
   return (
     <div>
       <h2>Select cards to mint</h2>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {errorMessage}
+        </Alert>
+      )}
       <div>
         
         <TextField
@@ -112,3 +117,5 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
 };
 
 export default SelectCardsStep;
+
+//{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

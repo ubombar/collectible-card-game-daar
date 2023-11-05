@@ -4,6 +4,9 @@ import { Button, List, ListItem, Grid, Card, CardMedia, CardContent, CardHeader 
 import { useWallet } from "../utilities"
 import { BigNumber, ethers } from 'ethers';
 
+import ShowPath from '@/components/ShowPath';
+import MyAppBar from '../components/MyAppBar'
+
 export const BoosterPage = () => {
     const wallet = useWallet()
     const account = wallet?.details.account;
@@ -56,6 +59,9 @@ export const BoosterPage = () => {
 
 
     return (
+        <div className={styles.body}>
+        <ShowPath/>
+        <MyAppBar/>
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
             <Grid item xs={6}>
                 <h3>Boosters</h3>
@@ -89,6 +95,7 @@ export const BoosterPage = () => {
                 </Button>
             </Grid>
         </Grid>
+        </div>
     );
 };
 

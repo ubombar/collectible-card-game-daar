@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,11 +16,52 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import icon from "../../public/vite.svg"
 
+import { useLocation } from 'react-router-dom';
+import { useWallet } from '@/utilities';
+import { useEffect } from 'react'
 
-function MyAppBar({ pages, pagePaths }) {
+
+function MyAppBar() {
+  const [pages, setPages] = useState([])
+  const [pagePaths, setPagePaths] = useState({})
+
+
+
+const wallet=useWallet()
+useEffect(() => {
+  const userPages=["Inventory", "Marketplace", "Auction Place", "Booster Page"]
+const adminPages=["Admin Page", "Minting Page"]
+
+let pagesNew: string[] = [];
+let userOrAdminString = "";
+console.log(wallet?.details.account);
+if (wallet?.details.account?.toLowerCase()=='0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'.toLowerCase()){
+  pagesNew = adminPages;
+  userOrAdminString = "AdminPage"
+}else{
+  pagesNew = userPages;
+  userOrAdminString = "UserPage"
+}
+
+
+
+
+var pagePathsNew = {
+  "Inventory": `/${userOrAdminString}`,
+  "Marketplace": `/${userOrAdminString}/MarketPlacePage`,
+  "Auction Place": `/${userOrAdminString}/AuctionPage`,
+  "Booster Page": `/${userOrAdminString}/BoosterPage`,
+  "Minting Page": `/${userOrAdminString}/MintingPage`,
+  "Admin Page": `/${userOrAdminString}`,
+};
+setPagePaths(pagePathsNew)
+setPages(pagesNew)
+},[wallet])
+
+
   
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ background: 'purple' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

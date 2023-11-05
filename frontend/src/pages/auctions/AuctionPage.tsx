@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import AuctionView from '@/components/AuctionView';
+
 import ShowPath from "../../components/ShowPath";
+import MyAppBar from '../../components/MyAppBar'
 
 var auctionList = [
     {
@@ -40,6 +42,7 @@ export const AuctionPage = () => {
     return (
         <div className={styles.body}>
                 <ShowPath />
+                <MyAppBar />
         <Grid container spacing={3}>
             <Grid item xs={12} style={{ alignItems: 'center' }}>
                 <Button style={{width: '100%'}} variant="contained" color="secondary" onClick={handleCreateAuction}>

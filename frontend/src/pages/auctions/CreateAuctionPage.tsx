@@ -1,9 +1,11 @@
 import ShowPath from "../../components/ShowPath";
+import MyAppBar from '../../components/MyAppBar'
 
 export const CreateAuctionPage = () => {
     return (
         <div>
-                <ShowPath />
+            <ShowPath />
+          <MyAppBar />
             Copy stuff from crist.
         </div>
     );

@@ -1,4 +1,5 @@
 import ShowPath from "../../components/ShowPath";
+import MyAppBar from '../../components/MyAppBar'
 
 // import { useWallet } from '@/utilities';
 // import styles from '../../styles.module.css'
@@ -101,6 +102,7 @@ export const BidforAuctionPage = () => {
   return (
     <div>
           <ShowPath />
+          <MyAppBar />
           <p>Test</p>
     </div>
   );

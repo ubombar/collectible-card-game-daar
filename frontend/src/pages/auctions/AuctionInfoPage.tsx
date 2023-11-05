@@ -6,8 +6,9 @@ import { Grid, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { CardContent, CardActions, Typography } from '@mui/material';
 import AuctionCard from '@/components/AuctionCard';
-import ShowPath from "../../components/ShowPath";
 
+import ShowPath from "../../components/ShowPath";
+import MyAppBar from '../../components/MyAppBar'
 const mockDataAuction = {
     cardName: "Zattirizortzort",
     from: "0x38d4BAd320711715F4f3B6F41916762e5f2E2F84",
@@ -22,6 +23,7 @@ export const AuctionInfoPage = () => {
     return (
         <Grid container spacing={3}>
                 <ShowPath />
+                <MyAppBar />
             <Grid item xs={12}>
                 <h1>Auction Info</h1>
                 <AuctionCard data={mockDataAuction} navigate={navigate}></AuctionCard>

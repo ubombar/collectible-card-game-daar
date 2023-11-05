@@ -52,10 +52,6 @@ export const App = () => {
           <Route path="/UserPage" element={<UserPage />} />
           <Route path="/AdminPage" element={<AdminPage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
-          <Route path="UserPage" element={<UserPage />} />
-          <Route path="AdminPage" element={<AdminPage />} />
-          <Route path="LoginPage" element={<LoginPage />} />
-          <Route path="BoosterPage" element={<BoosterPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
@@ -65,6 +61,7 @@ export const App = () => {
 
         <Route path="/UserPage/AuctionPage" element={<AuctionPage />} />
         <Route path="/UserPage/MarketPlacePage" element={<MarketPlacePage />} />
+        <Route path="/UserPage/BoosterPage" element={<BoosterPage />} />
         <Route path="/UserPage/AuctionPage/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
         <Route path="/UserPage/AuctionPage/CreateAuctionPage" element={<CreateAuctionPage />} />
         <Route path="/AdminPage/MintingPage" element={<MintingPage />} />

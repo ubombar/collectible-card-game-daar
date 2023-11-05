@@ -6,6 +6,7 @@ import SelectCardsStep from '../components/SelectCardsStep';
 import SelectUserStep from '../components/SelectUserStep';
 
 import ShowPath from '../components/ShowPath';
+import MyAppBar from '../components/MyAppBar'
 
 const allCards = [
     {
@@ -65,7 +66,8 @@ export const MintingPage = () => {
   
   return (
     <Container>
-     <ShowPath />
+      <ShowPath/>
+      <MyAppBar/>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

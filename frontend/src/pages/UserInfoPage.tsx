@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import ShowPath from '../components/ShowPath';
+import MyAppBar from '../components/MyAppBar';
 
 const usersData = [
     { id: 1, name: 'User 1', otherInfo: '...'},
@@ -20,8 +21,9 @@ export const UserInfoPage = () => {
     const user = usersData.find((user) => user.id === parseInt(ID, 10));
     return (
         <div>
-        <h2>User Details</h2>
         <ShowPath />
+        <h2>User Details</h2>
+        <MyAppBar/>
         <p>ID: {user?.id}</p>
         <p>Name: {user?.name}</p>
         <p>Other Info: {user?.otherInfo}</p>

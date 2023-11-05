@@ -10,7 +10,6 @@ import CollectionsTreeView from "../components/CollectionsTreeView";
 import ShowPath from '../components/ShowPath';
 import MyAppBar from '../components/MyAppBar'
 
-import { useLocation } from 'react-router-dom';
 //layout
 const usersData = [
   { id: 1, name: 'User 1', otherInfo: '...'},
@@ -56,27 +55,13 @@ export const AdminPage = () => {
   //periodic update
   const navigate = useNavigate();
   checkAccount(navigate)
-  
 
-
-  const handleMintClick = () => {
-    navigate('/AdminPage/MintingPage');
-  };
-
-  const adminPages=["Minting Page"]
-
-  const location = useLocation();
-  const userOrAdminString = location.pathname.split("/").at(1);
-
-  const pagePaths = {
-    "Minting Page": `/${userOrAdminString}/MintingPage`,
-  };
 
   return(
   <div className={styles.body}>
-    <h1>Admin Page</h1>
     <ShowPath />
-    <MyAppBar pages={adminPages} pagePaths={pagePaths}/>
+    <h1>Admin page</h1>
+    <MyAppBar/>
     <Grid container spacing={3}>
       <Grid item xs={6} style={{ alignItems: 'center' }}>
       <CollectionsTreeView collectionsData={collectionsData} navigate={navigate} />
@@ -85,9 +70,6 @@ export const AdminPage = () => {
         <UsersList usersData={usersData} navigate={navigate} />
         </Grid>
       </Grid>
-      <Button variant="contained" onClick={handleMintClick}>
-            Mint
-      </Button>
     </div>
     )
 };
