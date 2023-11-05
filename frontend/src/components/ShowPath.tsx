@@ -13,7 +13,7 @@ const ShowPath = () => {
   //Extract the path of the last visited pade
   const location = useLocation();
   const currentPath = location.pathname;
-
+  
   const pageList = currentPath.split("/");
   pageList.shift(); // pops first element
 

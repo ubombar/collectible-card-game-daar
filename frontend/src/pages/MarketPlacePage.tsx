@@ -2,15 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 import { checkAccount } from '@/utilities'
 import styles from '../styles.module.css'
-import { Grid, Button } from '@mui/material';
+import { Grid} from '@mui/material';
 
 import UsersList from "../components/UsersList";
 import CollectionsTreeView from "../components/CollectionsTreeView";
 
 import ShowPath from '../components/ShowPath';
-import MyAppBar from '../components/MyAppBar'
-
-import { useLocation } from 'react-router-dom';
 //layout
 const usersData = [
   { id: 1, name: 'User 1', otherInfo: '...' },
@@ -51,7 +48,7 @@ const collectionsData = [
   // Other collections
 ];
 
-export const UserPage = () => {
+export const MarketPlacePage = () => {
   const [number, setNumber] = useState<number>(0)
   console.log("ciao")
 
@@ -66,24 +63,11 @@ export const UserPage = () => {
   function handleAuctionClick() {
     navigate("/UserPage/AuctionPage")
   }
-
-  const userPages=["Inventory", "Marketplace", "Auction Place", "Booster Page"]
-
-  const location = useLocation();
-  const userOrAdminString = location.pathname.split("/").at(1);
-
-  const pagePaths = {
-    "Inventory": `/${userOrAdminString}`,
-    "Marketplace": `/${userOrAdminString}/MarketPlacePage`,
-    "Auction Place": `/${userOrAdminString}/AuctionPage`,
-    "Booster Page": `/${userOrAdminString}/BoosterPage`
-  };
   return (
     <div className={styles.body}>
       <h1>User Page</h1>
       <ShowPath />
-      <MyAppBar pages={userPages} pagePaths={pagePaths}/>
-      <h2>Inventory: my cards</h2>
+      <h2>Market Place</h2>
       <Grid container spacing={3}>
         <Grid item xs={6} style={{ alignItems: 'center' }}>
           <CollectionsTreeView collectionsData={collectionsData} navigate={navigate} />
@@ -91,9 +75,6 @@ export const UserPage = () => {
         <Grid item xs={6} style={{ alignItems: 'center' }}>
           <UsersList usersData={usersData} navigate={navigate} />
         </Grid>
-        <Button variant="contained" onClick={handleAuctionClick}>
-          Auctions
-        </Button>
       </Grid>
     </div>
 
