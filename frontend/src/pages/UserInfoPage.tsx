@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 import ShowPath from '../components/ShowPath';
+import { My } from 'devextreme-react/autocomplete';
+import MyAppBar from '@/components/MyAppBar';
 
 const usersData = [
     { id: 1, name: 'User 1', otherInfo: '...'},
@@ -20,6 +22,7 @@ export const UserInfoPage = () => {
     const user = usersData.find((user) => user.id === parseInt(ID, 10));
     return (
         <div>
+        <MyAppBar />
         <h2>User Details</h2>
         <ShowPath />
         <p>ID: {user?.id}</p>

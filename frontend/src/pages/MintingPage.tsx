@@ -9,6 +9,7 @@ import ShowPath from '../components/ShowPath';
 import { useWallet } from '@/utilities';
 import * as Skry from "scryfall-sdk";
 import { useNavigate } from 'react-router-dom';
+import MyAppBar from '@/components/MyAppBar';
 
 const allUsers = [
   { id: 1, name: 'User 1', otherInfo: '...' },
@@ -121,6 +122,7 @@ export const MintingPage = () => {
 
   return (
     <Container>
+      <MyAppBar />
       <ShowPath />
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (

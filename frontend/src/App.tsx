@@ -9,11 +9,14 @@ import { UserInfoPage } from "./pages/UserInfoPage";
 import { CardInfoPage } from "./pages/CardInfoPage";
 import { CollectionInfoPage } from "./pages/CollectionInfoPage";
 import { AuctionPage } from './pages/auctions/AuctionPage';
+import { MarketPlacePage } from './pages/MarketPlacePage';
 import { BidforAuctionPage } from './pages/auctions/BidforAuctionPage';
 import { CreateAuctionPage } from './pages/auctions/CreateAuctionPage';
-import {AuctionInfoPage} from './pages/auctions/AuctionInfoPage';
+import { AuctionInfoPage } from './pages/auctions/AuctionInfoPage';
 import { MintingPage } from "./pages/MintingPage";
 import { BoosterPage } from "./pages/BoosterPage";
+
+
 
 type Canceler = () => void
 const useAffect = (
@@ -43,30 +46,28 @@ export const App = () => {
   const isAdmin = wallet?.details.account === adminAccount;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" >
-          <Route index element={<LoginPage />} />
-          <Route path="/UserPage" element={<UserPage />} />
-          <Route path="/AdminPage" element={<AdminPage />} />
-          <Route path="/LoginPage" element={<LoginPage />} />
-          <Route path="UserPage" element={<UserPage />} />
-          <Route path="AdminPage" element={<AdminPage />} />
-          <Route path="LoginPage" element={<LoginPage />} />
-          <Route path="BoosterPage" element={<BoosterPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
-        <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
-        <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
-        <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
-        <Route path="/AuctionInfoPage/:ID" element={<AuctionInfoPage />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" >
+            <Route index element={<LoginPage />} />
+            <Route path="/UserPage" element={<UserPage />} />
+            <Route path="/AdminPage" element={<AdminPage />} />
+            <Route path="/LoginPage" element={<LoginPage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+          <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
+          <Route path="/CardInfoPage/:ID" element={<CardInfoPage />} />
+          <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
+          <Route path="/AuctionInfoPage/:ID" element={<AuctionInfoPage />} />
 
-        <Route path="/UserPage/AuctionPage" element={<AuctionPage />} />
-        <Route path="/UserPage/AuctionPage/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
-        <Route path="/UserPage/AuctionPage/CreateAuctionPage" element={<CreateAuctionPage />} />
-        <Route path="/AdminPage/MintingPage" element={<MintingPage />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/UserPage/AuctionPage" element={<AuctionPage />} />
+          <Route path="/UserPage/MarketPlacePage" element={<MarketPlacePage />} />
+          <Route path="/UserPage/BoosterPage" element={<BoosterPage />} />
+          <Route path="/UserPage/AuctionPage/BidforAuctionPage/:ID" element={<BidforAuctionPage />} />
+          <Route path="/UserPage/AuctionPage/CreateAuctionPage" element={<CreateAuctionPage />} />
+          <Route path="/AdminPage/MintingPage" element={<MintingPage />} />
+        </Routes>
+      </BrowserRouter>
   );
 
 }

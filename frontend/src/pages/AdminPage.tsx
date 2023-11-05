@@ -8,6 +8,7 @@ import UsersList from "../components/UsersList";
 import CollectionsTreeView from "../components/CollectionsTreeView";
 
 import ShowPath from '../components/ShowPath';
+import MyAppBar from '@/components/MyAppBar';
 //layout
 const usersData = [
   { id: 1, name: 'User 1', otherInfo: '...'},
@@ -64,6 +65,7 @@ export const AdminPage = () => {
 
   return(
   <div className={styles.body}>
+    <MyAppBar />
     <h1>Admin Page</h1>
     <ShowPath />
     <Grid container spacing={3}>

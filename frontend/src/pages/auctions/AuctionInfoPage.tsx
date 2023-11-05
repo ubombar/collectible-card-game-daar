@@ -8,6 +8,7 @@ import { CardContent, CardActions, Typography } from '@mui/material';
 import AuctionCard from '@/components/AuctionCard';
 import ShowPath from "../../components/ShowPath";
 import AuctionCardDetailed from '@/components/AuctionCardDetailed';
+import MyAppBar from '@/components/MyAppBar';
 
 const mockDataAuction = {
     cardName: "Zattirizortzort",
@@ -41,6 +42,7 @@ export const AuctionInfoPage = () => {
 
     return (
         <Grid container spacing={3}>
+            <MyAppBar />
             <ShowPath />
             <Grid item xs={12}>
                 <h1>Auction Info</h1>
