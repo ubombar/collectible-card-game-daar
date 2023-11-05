@@ -20,22 +20,22 @@ const allCardsMock = [
     {
         id: 1,
         url: "aaa"
-      },
-      {
+    },
+    {
         id: 2,
         url: "bbb"
-      },
-      {
+    },
+    {
         id: 3,
         url: "ccc"
-      },
-      {
+    },
+    {
         id: 4,
         url: "ddd"
-      },
-  ];
+    },
+];
 
-export const CardPicker = ({lastPageMessage, lastPageButton}) => {
+export const CardPicker = ({ lastPageMessage, lastPageButton, bidding, auctionId }) => {
     const [allCards, setAllCards] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [selectedCard, setSelectedCard] = useState({});
@@ -45,8 +45,8 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
 
     useEffect(() => {
         wallet?.cardmanagerContract.userToCards(wallet.details.account).then((stringOfNames: string[]) => {
-            // console.log(stringOfNames[0][1].toNumber());
-            
+            console.log(stringOfNames);
+
             stringOfNames = stringOfNames.map((cccc) => {
                 return {
                     id: cccc[0],
@@ -54,10 +54,10 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
                     tokenId: cccc[1].toNumber(),
                 }
             })
-    
+
             console.log(stringOfNames);
-            
-            setAllCards(stringOfNames);
+
+            setAllCards([...stringOfNames]);
         })
     }, [wallet])
 
@@ -66,12 +66,20 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
             setActiveStep(activeStep + 1);
             setPassable(false);
         } else {
-            // Call the create auction here!
-            wallet?.marketContract.open(selectedCard.tokenId).then((r) => {
-                console.log(r);
-                
-                navigate("/UserPage/AuctionPage")
-            })
+            if (bidding) {
+                wallet?.marketContract.offer(auctionId, selectedCard.tokenId).then((r) => {
+                    console.log("Offered!");
+
+                    navigate("/UserPage/AuctionPage")
+                })
+            } else {
+                // Call the create auction here!
+                wallet?.marketContract.open(selectedCard.tokenId).then((r) => {
+                    console.log(r);
+
+                    navigate("/UserPage/AuctionPage")
+                })
+            }
         }
     };
 
@@ -81,13 +89,13 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
 
     const getStepContent = (step: number) => {
         switch (step) {
-              case 0:
-                return <SingleCardSelectorStep setPassable={setPassable} cards={allCards} setSelectedCardUpper={setSelectedCard}/>;
-              case 1:
+            case 0:
+                return <SingleCardSelectorStep setPassable={setPassable} cards={allCards} setSelectedCardUpper={setSelectedCard} />;
+            case 1:
                 return <ApproveCardForTransferStep setPassable={setPassable} selectedCard={selectedCard} />;
-              case 2:
+            case 2:
                 // return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={"People will see your trade offer in the auctions page, they will bid their offer. It is up to you to reject, accept or cancel their offers."}/>;
-                return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={lastPageMessage}/>;
+                return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={lastPageMessage} />;
             default:
                 return <div>Error? {step}</div>;
         }

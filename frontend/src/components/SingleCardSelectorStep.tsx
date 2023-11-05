@@ -43,7 +43,7 @@ const SingleCardSelectorStep = ({ cards, setPassable, setSelectedCardUpper }) =>
                                         disableRipple
                                         inputProps={{ 'aria-labelledby': labelId }}
                                     /> */}
-                                    <ListItemText primary={card.url + `[${card.url}]`} />
+                                    <ListItemText primary={`nft-card-token-${card.tokenId}`}/>
                                     <Button disabled={selectedCard?.tokenId == card.tokenId}>{selectedCard?.tokenId == card.tokenId ? "Selected" : "Use This Card"}</Button>
                                 </ListItem>
                             );
