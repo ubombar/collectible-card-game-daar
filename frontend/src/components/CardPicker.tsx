@@ -4,7 +4,7 @@ import { useWallet } from '@/utilities';
 import styles from '../../styles.module.css'
 import { Button, Grid, ListItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AuctionView from '@/components/AuctionView';
 import { Stepper, Step, StepLabel, Typography, Container } from '@mui/material';
@@ -43,15 +43,23 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
     const navigate = useNavigate()
     const wallet = useWallet();
 
-    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((stringOfNames: string[]) => {
-        stringOfNames = stringOfNames.map((strName) => {
-            return {
-                id: strName
-
-            }
+    useEffect(() => {
+        wallet?.cardmanagerContract.userToCards(wallet.details.account).then((stringOfNames: string[]) => {
+            // console.log(stringOfNames[0][1].toNumber());
+            
+            stringOfNames = stringOfNames.map((cccc) => {
+                return {
+                    id: cccc[0],
+                    url: cccc[0],
+                    tokenId: cccc[1].toNumber(),
+                }
+            })
+    
+            console.log(stringOfNames);
+            
+            setAllCards(stringOfNames);
         })
-        setAllCards(cardArray);
-    })
+    }, [wallet])
 
     const handleNext = () => {
         if (activeStep <= 1) {
