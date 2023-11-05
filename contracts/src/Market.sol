@@ -21,8 +21,8 @@ contract Market is IMarket {
     uint256[] private _auctionList;
     CardManager private _cardManager;
     
-    constructor(CardManager cardManager) {
-        _cardManager = cardManager;
+    constructor(address _cardManagerAddress) {
+        _cardManager = CardManager(_cardManagerAddress);
         _auctionCounter = 0;
     }
 
