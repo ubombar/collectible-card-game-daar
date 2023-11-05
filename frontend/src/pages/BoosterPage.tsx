@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, List, ListItem, Stack } from '@mui/material';
+import { Button, Card, CardHeader, CardMedia, Stack } from '@mui/material';
 import { useWallet } from "../utilities"
 import { BigNumber, ethers } from 'ethers';
 import * as Scry from "scryfall-sdk";
@@ -18,12 +18,12 @@ export const BoosterPage = () => {
         let cards: string[] = [];
         // 1 land card
         cards.push(await Scry.Cards.random("type:land").then((card) => { return card.id; }));
-        // 4 common  or common cards
-        for (let i = 0; i < 4; i++) {
+        // 6 common cards
+        for (let i = 0; i < 9; i++) {
             cards.push(await Scry.Cards.random("rarity:Common").then((card) => { return card.id; }));
         }
-        // 3 uncommon cards
-        for (let i = 0; i < 3; i++) {
+        // 6 uncommon cards
+        for (let i = 0; i < 5; i++) {
             cards.push(await Scry.Cards.random("rarity:Uncommon").then((card) => { return card.id; }));
         }
         // 1 rare card
@@ -49,7 +49,7 @@ export const BoosterPage = () => {
     })
 
     wallet?.mainContract.on("BoosterBurned", (boosterId: BigNumber, owner: string) => {
-        setBoosters([...boosters.filter((id) => id !== boosterId.toNumber())]);
+        setBoosters([]);
     })
 
 
@@ -98,7 +98,17 @@ export const BoosterPage = () => {
             <p>List of your boosters:</p>
             <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
                 {boosters?.map((booster, index) => (
-                    { booster}
+                    <Card >
+                        <CardHeader
+                            title={`Booster ID: ${booster}`}
+                        />
+                        <CardMedia
+                            component="img"
+                            height="400"
+                            image="./static/images/booster_img.png"
+                            alt="Booster image"
+                        />
+                    </Card>
                 ))}
             </Stack>
             <h3>Rewards</h3>
