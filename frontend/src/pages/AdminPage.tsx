@@ -68,10 +68,10 @@ export const AdminPage = () => {
     <ShowPath />
     <Grid container spacing={3}>
       <Grid item xs={6} style={{ alignItems: 'center' }}>
-      <CollectionsTreeView collectionsData={collectionsData} navigate={navigate} />
+      {/* <CollectionsTreeView collectionsData={collectionsData} navigate={navigate} /> */}
       </Grid>
       <Grid item xs={6} style={{ alignItems: 'center' }}>
-        <UsersList usersData={usersData} navigate={navigate} />
+        {/* <UsersList usersData={usersData} navigate={navigate} /> */}
         </Grid>
       </Grid>
       <Button variant="contained" onClick={handleMintClick}>
