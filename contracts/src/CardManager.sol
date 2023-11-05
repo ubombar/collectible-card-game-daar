@@ -67,6 +67,30 @@ contract CardManager is Ownable, ERC721 {
     return cards;
   }
 
+  function getAllUsers () public view returns (address[] memory) {
+    address[] memory result = new address[](uint256(mintedCardNumber));
+    for (uint256 i = 0; i < mintedCardNumber; i++) {
+      address user = ownerOf(i);
+      result[i] = user;
+    }
+    return result;
+  }
+
+
+  function userToCardNames(address _user) public view returns (string[] memory) {
+    uint256 count = balanceOf(_user);
+    // create array of cards (using the count to set the size)
+    string[] memory cards = new string[](uint256(count));
+    count = 0;
+    for (uint256 i = 0; i < mintedCardNumber; i++) {
+      if (ownerOf(i) == _user) {
+        cards[count] = tokenIdToCard[i].id;
+        count++;
+      }
+    }
+    return cards;
+  }
+
 // ------------------ Collection functions ------------------
   function createCollection(
     string memory _collectionName,
@@ -80,7 +104,8 @@ contract CardManager is Ownable, ERC721 {
   function getAllCollections() public view returns (string[] memory) {
     string[] memory result = new string[](uint256(numberOfCollections));
     for (uint256 i = 0; i < numberOfCollections; i++) {
-      result[i] = idToCollectionName[i];
+      string memory collectionName = idToCollectionName[i];
+      result[i] = collectionName;
     }
     return result;
   }

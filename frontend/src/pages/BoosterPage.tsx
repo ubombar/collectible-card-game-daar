@@ -109,7 +109,7 @@ export const BoosterPage = () => {
                         <CardMedia
                             component="img"
                             height="400"
-                            image="./static/images/booster_img.png"
+                            image="../static/images/booster_img.png"
                             alt="Booster image"
                         />
                     </Card>

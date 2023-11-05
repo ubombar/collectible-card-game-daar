@@ -168,7 +168,9 @@ contract Market is IMarket {
         // Emit the message that a new auction is open
         emit AuctionOpened(msg.sender, _auctionCounter - 1);
 
-        return _auctionCounter - 1;
+        uint256 res = _auctionCounter - 1;
+
+        return res;
     }
 
     // Closes the auction giving the NFT to the highest bidder, returning other bids 

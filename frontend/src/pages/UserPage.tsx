@@ -1,69 +1,65 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { checkAccount } from '@/utilities'
 import styles from '../styles.module.css'
-import { Grid, Button } from '@mui/material';
-
-import UsersList from "../components/UsersList";
-import CollectionsTreeView from "../components/CollectionsTreeView";
-
-import ShowPath from '../components/ShowPath';
+import { Grid, Button, Stack, ListItem } from '@mui/material';
+import { useWallet } from "../utilities"
+import * as Skry from "scryfall-sdk";
 import MyAppBar from '@/components/MyAppBar';
-//layout
-const usersData = [
-  { id: 1, name: 'User 1', otherInfo: '...' },
-  { id: 2, name: 'User 2', otherInfo: '...' },
-  { id: 3, name: 'User 3', otherInfo: '...' },
-];
-
-const collectionsData = [
-  {
-    name: 'Collection 1',
-    cardsCount: 3,
-    cards: [
-      {
-        id: 1,
-        url: "aaa"
-      },
-      {
-        id: 2,
-        url: "bbb"
-      }, {
-        id: 3,
-        url: "ccc"
-      }],
-  },
-  {
-    name: 'Collection 2',
-    cardsCount: 2,
-    cards: [
-      {
-        id: 4,
-        url: "ddd"
-      },
-      {
-        id: 5,
-        url: "eee"
-      }],
-  },
-  // Other collections
-];
+import ShowPath from '../components/ShowPath';
+import CardMTG from '@/components/CardMTG';
 
 export const UserPage = () => {
   const [number, setNumber] = useState<number>(0)
-  console.log("ciao")
+  const [cards, setCards] = useState<string[]>([]);
+  const [cardsOfUsers, setCardsOfUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<string[]>([]);
+  const [collections, setCollections] = useState<string[]>([]);
+  const wallet = useWallet();
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      const response = wallet?.cardmanagerContract.userToCardNames(wallet.details.account)
+        .then((cardArray: string[]) => {
+          // remove strings that has length less than 36 char
+          cardArray = cardArray.filter((cardId) => cardId.length >= 36) //TODO: regex better formatting
+          setCards(cardArray);
+          // retriev collection names of the cards from Skry
+          for (let i = 0; i < cardArray.length; i++) {
+            Skry.Cards.byId(cardArray[i]).then((card) => {
+              //filter duplicates
+              if (!collections.includes(card.set_name))
+                setCollections([...collections, card.set_name]);
+            })
+          }
+        })
+    }
+    fetchCards();
+  }, [wallet?.cardmanagerContract]);
+
+  useEffect(() => {
+    const fetchCardsOfUsers = async () => {
+      // retrieve list of users
+      const users = wallet?.cardmanagerContract.getAllUsers()
+        .then((userArray: string[]) => {
+          // filter duplicates
+          setUsers(userArray.filter((val,id,array) => array.indexOf(val) == id))
+        })
+    }
+    fetchCardsOfUsers();
+  }, [wallet]);
 
   const navigate = useNavigate();
   checkAccount(navigate)
 
-  function buttonClick() {
-    console.log("1 click")
-    setNumber(number + 1)
-  }
-
   function handleAuctionClick() {
     navigate("/UserPage/AuctionPage")
   }
+
+  function handleBoosterClick() {
+    navigate("/BoosterPage")
+  }
+
   return (
     <div className={styles.body}>
       <MyAppBar />
@@ -72,10 +68,21 @@ export const UserPage = () => {
       <h2>Inventory: my cards</h2>
       <Grid container spacing={3}>
         <Grid item xs={6} style={{ alignItems: 'center' }}>
-          <CollectionsTreeView collectionsData={collectionsData} navigate={navigate} />
+          <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+            {cards?.map((id, index) => (
+              <CardMTG key={index} id={`${id}`} />
+            ))}
+          </Stack>
         </Grid>
         <Grid item xs={6} style={{ alignItems: 'center' }}>
-          <UsersList usersData={usersData} navigate={navigate} />
+          Available collections
+          {collections.length > 0 && (collections.map((collection) =>
+            (<ListItem> {collection} </ListItem>)))
+          }
+          Users in this blockchain
+          {users.length > 0 && (users.map((user) =>
+            (<ListItem> {user} </ListItem>)))
+          }
         </Grid>
         <Button variant="contained" onClick={handleAuctionClick}>
           Auctions

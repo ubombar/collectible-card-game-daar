@@ -12,7 +12,7 @@ import { SingleBed } from "@mui/icons-material";
 import SingleCardSelectorStep from "@/components/SingleCardSelectorStep";
 import { ApproveCardForTransferStep } from "@/components/ApproveCardFortransfer";
 import { ReturBackToAuctionsStep } from "@/components/ReturBackToAuctionsStep";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 const steps = ['Select the card for exchange', 'Approve the card', 'Return back to the auctions'];
 
@@ -20,33 +20,34 @@ const allCardsMock = [
     {
         id: 1,
         url: "aaa"
-      },
-      {
+    },
+    {
         id: 2,
         url: "bbb"
-      },
-      {
+    },
+    {
         id: 3,
         url: "ccc"
-      },
-      {
+    },
+    {
         id: 4,
         url: "ddd"
-      },
-  ];
+    },
+];
 
-export const CardPicker = ({lastPageMessage, lastPageButton}) => {
+export const CardPicker = ({ lastPageMessage, lastPageButton }) => {
     const [allCards, setAllCards] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
-    const [selectedCard, setSelectedCard] = useState({});
+    const [selectedCard, setSelectedCard] = useState({ tokenId: -1 });
     const [passable, setPassable] = useState(false)
     const navigate = useNavigate()
     const wallet = useWallet();
 
-    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((cardArray: {id: string, tokenId: ethers.BigNumber}[]) => {
+    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((cardArray: { id: string, tokenId: ethers.BigNumber }[]) => {
         cardArray = cardArray.map((card) => {
-            return { ...card, ...{tokenId: card.tokenId.toNumber()} }
+            return { tokenId: card.tokenId.toNumber(), url: card.id, id: card.tokenId.toNumber() }
         })
+
         setAllCards(cardArray);
     })
 
@@ -56,7 +57,15 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
             setPassable(false);
         } else {
             // Call the create auction here!
-            navigate("/UserPage/AuctionPage")
+            console.log(selectedCard);
+
+            wallet?.marketContract.open(selectedCard.tokenId).then((r) => {
+                navigate("/UserPage/AuctionPage")
+            })
+
+            // wallet?.marketContract.list().then((e) => {
+            //     console.log(e);
+            // })
         }
     };
 
@@ -66,13 +75,13 @@ export const CardPicker = ({lastPageMessage, lastPageButton}) => {
 
     const getStepContent = (step: number) => {
         switch (step) {
-              case 0:
-                return <SingleCardSelectorStep setPassable={setPassable} cards={allCards} setSelectedCardUpper={setSelectedCard}/>;
-              case 1:
+            case 0:
+                return <SingleCardSelectorStep setPassable={setPassable} cards={allCards} setSelectedCardUpper={setSelectedCard} />;
+            case 1:
                 return <ApproveCardForTransferStep setPassable={setPassable} selectedCard={selectedCard} />;
-              case 2:
+            case 2:
                 // return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={"People will see your trade offer in the auctions page, they will bid their offer. It is up to you to reject, accept or cancel their offers."}/>;
-                return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={lastPageMessage}/>;
+                return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={lastPageMessage} />;
             default:
                 return <div>Error? {step}</div>;
         }

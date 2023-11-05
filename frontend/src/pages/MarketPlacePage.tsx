@@ -9,7 +9,6 @@ import CollectionsTreeView from "../components/CollectionsTreeView";
 
 import ShowPath from '../components/ShowPath';
 import MyAppBar from '../components/MyAppBar'
-import { My } from 'devextreme-react/autocomplete';
 
 //layout
 const usersData = [
