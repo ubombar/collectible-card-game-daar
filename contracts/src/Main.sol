@@ -34,7 +34,7 @@ contract Main is Ownable {
     cardManager.transferCard(_to, _cardId);
   }
 
-  function userToCards(address _user) external view onlyOwner returns (CardManager.Card[] memory) {
+  function userToCards(address _user) external view onlyOwner returns (string[] memory) {
     return cardManager.userToCards(_user);
   }
 

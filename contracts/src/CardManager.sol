@@ -53,14 +53,14 @@ contract CardManager is Ownable, ERC721 {
     _safeTransfer(ownerOf(_tokenId), _to, _tokenId, "");
   }
 
-  function userToCards(address _user) public view returns (Card[] memory) {
+  function userToCards(address _user) public view returns (string[] memory) {
     uint256 count = balanceOf(_user);
     // create array of cards (using the count to set the size)
-    Card[] memory cards = new Card[](uint256(count));
+    string[] memory cards = new string[](uint256(count));
     count = 0;
     for (uint256 i = 0; i < mintedCardNumber; i++) {
       if (ownerOf(i) == _user) {
-        cards[count] = tokenIdToCard[i];
+        cards[count] = tokenIdToCard[i].id;
         count++;
       }
     }
