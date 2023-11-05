@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import {CardContent, CardActions, Typography, Button} from '@mui/material';
+import { CardContent, CardActions, Typography, Button, Card } from '@mui/material';
 
-export default function AuctionCard({data: { cardName, from, sellersTokenId, auctionId }, navigate}) {
+export default function AuctionCard({ data: { cardName, from, sellersTokenId, auctionId }, navigate }) {
     const theme = useTheme();
 
     return (
-        <React.Fragment>
+        <Card>
             <CardContent>
                 <Typography variant="h5" component="div">
                     Offering: <a href={"/CardInfoPage/" + cardName}>{cardName}</a>
@@ -22,9 +22,9 @@ export default function AuctionCard({data: { cardName, from, sellersTokenId, auc
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={() => {navigate("/UserPage/AuctionPage/BidforAuctionPage/" + auctionId)}} size="small">Offer a Card for Exchange</Button>
-                <Button onClick={() => {navigate("/AuctionInfoPage/" + auctionId)}} size="small">See Details</Button>
+                <Button onClick={() => { navigate("/UserPage/AuctionPage/BidforAuctionPage/" + auctionId) }} size="small">Offer a Card for Exchange</Button>
+                <Button onClick={() => { navigate("/AuctionInfoPage/" + auctionId) }} size="small">See Details</Button>
             </CardActions>
-        </React.Fragment>
+        </Card>
     );
 }
