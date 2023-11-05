@@ -34,7 +34,7 @@ const allCards = [
       },
   ];
 
-export const BidforAuctionPage = () => {
+export const CardPicker = ({lastPageMessage}) => {
     const [activeStep, setActiveStep] = useState(0);
     const [selectedCard, setSelectedCard] = useState({});
     const [passable, setPassable] = useState(false)
@@ -61,7 +61,8 @@ export const BidforAuctionPage = () => {
               case 1:
                 return <ApproveCardForTransferStep setPassable={setPassable} selectedCard={selectedCard} />;
               case 2:
-                return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={"The seller will see your bid, it is up to them to reject, accept or cancel the auction. You can track the status of your bidding on the details of the auction."}/>;
+                // return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={"People will see your trade offer in the auctions page, they will bid their offer. It is up to you to reject, accept or cancel their offers."}/>;
+                return <ReturBackToAuctionsStep setPassable={setPassable} lastPageMessage={lastPageMessage}/>;
             default:
                 return <div>Error? {step}</div>;
         }
@@ -110,3 +111,4 @@ export const BidforAuctionPage = () => {
     );
 };
 //ATTENZIONE devo far sì che le scelte e i campi inseriti si mantengano tornando indietro?
+

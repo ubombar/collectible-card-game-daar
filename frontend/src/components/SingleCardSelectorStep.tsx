@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, ListItem, Checkbox, ListItemText, Paper, List } from '@mui/material';
 import TransferList from '../components/TransferList';
 
-const SingleCardSelectorStep = ({ cards, setPassable }) => {
+const SingleCardSelectorStep = ({ cards, setPassable, setSelectedCardUpper }) => {
     const [selectedCard, setSelectedCard] = useState({id: -1});
     const [cardSearchText, setCardSearchText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -11,6 +11,7 @@ const SingleCardSelectorStep = ({ cards, setPassable }) => {
         // const selectedCard = cards.indexOf(card);
 
         setSelectedCard(card);
+        setSelectedCardUpper(card)
         setPassable(true);
     };
 
@@ -27,16 +28,10 @@ const SingleCardSelectorStep = ({ cards, setPassable }) => {
                     onChange={(e) => setCardSearchText(e.target.value)}
                 />
             </div>
-            {/* <TransferList
-        left={cards.filter((card) =>card.url.toLowerCase().includes(cardSearchText.toLowerCase()))}
-        right={cards.filter((card)=>selectedCards.includes(card.id))}
-        handleToggle={handleToggle}
-      /> */}
-
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paper elevation={2} style={{ width: '600px', margin: '20px' }}>
                     <List dense component="div" role="list">
-                        {cards.map((card) => {
+                        {cards.filter((card) => {return cardSearchText.length == 0 || card.url.includes(cardSearchText)}).map((card) => {
                             const labelId = `checkbox-list-label-${card.id}`;
                             return (
 
