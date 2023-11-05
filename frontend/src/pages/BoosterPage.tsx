@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import styles from '../styles.module.css'
-import { Button, List, ListItem, Grid, Card, CardMedia, CardContent, CardHeader } from '@mui/material';
+import { Button, List, ListItem, Stack } from '@mui/material';
 import { useWallet } from "../utilities"
 import { BigNumber, ethers } from 'ethers';
+import * as Scry from "scryfall-sdk";
+import CardMTG from '../components/CardMTG';
 
 export const BoosterPage = () => {
     const wallet = useWallet()
@@ -11,14 +12,39 @@ export const BoosterPage = () => {
     const [redeemedItems, setRedeemedItems] = useState<string[]>([]);
 
 
+    // function to generate random cards
+    const generateCards = async () => {
+        // generate random cards
+        let cards: string[] = [];
+        // 1 land card
+        cards.push(await Scry.Cards.random("type:land").then((card) => { return card.id; }));
+        // 4 common  or common cards
+        for (let i = 0; i < 4; i++) {
+            cards.push(await Scry.Cards.random("rarity:Common").then((card) => { return card.id; }));
+        }
+        // 3 uncommon cards
+        for (let i = 0; i < 3; i++) {
+            cards.push(await Scry.Cards.random("rarity:Uncommon").then((card) => { return card.id; }));
+        }
+        // 1 rare card
+        cards.push(await Scry.Cards.random("rarity:Rare").then((card) => { return card.id; }));
+        // 1 mythic card
+        cards.push(await Scry.Cards.random("rarity:Mythic").then((card) => { return card.id; }));
+        return cards;
+    }
+
+
     wallet?.mainContract.on("BoosterMinted", (boosterId: BigNumber) => {
         // setBoosters and filter out duplicates
-        setBoosters([...boosters.filter((id) => id !== boosterId.toNumber()), boosterId.toNumber()]);
+        //if not already in boosters, add to boosters
+        if (!boosters.includes(boosterId.toNumber())) {
+            setBoosters([...boosters, boosterId.toNumber()]);
+        }
     })
 
     wallet?.mainContract.on("BoosterRedeemed", (resCardIds: string[], owner: string) => {
-        // setRedeemedItems and filter out duplicates
-        setRedeemedItems([...redeemedItems.filter((id) => !resCardIds.includes(id)), ...resCardIds]);
+        // if not already in redeemedItems, add to redeemedItems
+        setRedeemedItems([...redeemedItems, ...resCardIds]);
         setBoosters([]);
     })
 
@@ -27,9 +53,10 @@ export const BoosterPage = () => {
     })
 
 
-    const handleBuyBooster = () => {
+    const handleBuyBooster = async () => {
         // retrieve booster cardIds from backend
-        const cardIds = ["rare", "uncommon", "common"]//backend.getBoosterCardIds(enteredCode)
+        const cardIds: string[] = await generateCards();
+        console.log(cardIds);
         // call mint booster function
         wallet?.mainContract
             .mintBooster(cardIds, account, { value: ethers.utils.parseEther("1.0") })
@@ -56,39 +83,34 @@ export const BoosterPage = () => {
 
 
     return (
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-            <Grid item xs={6}>
-                <h3>Boosters</h3>
-                <p>Click on a booster to collect it</p>
-                <Button variant="contained" onClick={handleBuyBooster}>
-                    Buy Booster
-                </Button>
-                <p>List of your boosters:</p>
-                <List>
-                    {boosters?.map((booster, index) => (
-                        <ListItem key={index}> {booster} </ListItem>
-                    ))}
-                </List>
-            </Grid>
-            <Grid item xs={6}>
-                <h3>Rewards</h3>
-                <List>
-                    {redeemedItems?.map((item, index) => (
-                        <ListItem key={index}>
-                            {item}
-                        </ListItem>
-                    ))}
-                </List>
-            </Grid>
-            <Grid item xs={6}>
-                <Button variant="contained" onClick={handleCollectAll}>
-                    Collect All
-                </Button>
-                <Button variant="contained" onClick={handleBurnAll}>
-                    Trash All
-                </Button>
-            </Grid>
-        </Grid>
+        <>
+            <h3>Boosters</h3>
+            <p>Click on a booster to collect it</p>
+            <Button variant="contained" onClick={handleBuyBooster}>
+                Buy Booster
+            </Button>
+            <Button variant="contained" onClick={handleCollectAll}>
+                Collect All
+            </Button>
+            <Button variant="contained" onClick={handleBurnAll}>
+                Trash All
+            </Button>
+            <p>List of your boosters:</p>
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+                {boosters?.map((booster, index) => (
+                    { booster}
+                ))}
+            </Stack>
+            <h3>Rewards</h3>
+            <Button variant="contained" onClick={() => setRedeemedItems([])}>
+                Clear Rewards
+            </Button>
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+                {redeemedItems?.map((id, index) => (
+                    <CardMTG key={index} id={`${id}`} />
+                ))}
+            </Stack>
+        </>
     );
 };
 
