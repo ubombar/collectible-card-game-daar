@@ -41,7 +41,6 @@ export const App = () => {
 
   const isEmptyAccount = !wallet?.details.account;
   const isAdmin = wallet?.details.account === adminAccount;
-  console.log("app")
 
   return (
     <BrowserRouter>
@@ -68,8 +67,6 @@ export const App = () => {
         <Route path="/AdminPage/MintingPage" element={<MintingPage />} />
       </Routes>
     </BrowserRouter>
-
-
   );
 
 }

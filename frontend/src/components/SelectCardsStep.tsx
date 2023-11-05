@@ -94,7 +94,7 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
       <h2>Select cards to mint</h2>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <div>
-        
+
         <TextField
           label="Search card"
           variant="outlined"
@@ -102,11 +102,32 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
           onChange={(e) => setCardSearchText(e.target.value)}
         />
       </div>
-      <TransferList
+      {/* <TransferList
         left={cards.filter((card) =>card.url.toLowerCase().includes(cardSearchText.toLowerCase()))}
         right={cards.filter((card)=>selectedCards.includes(card.id))}
         handleToggle={handleToggle}
-      />
+      /> */}
+
+      {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Paper elevation={2} style={{ width: '200px', margin: '20px' }}>
+          <List dense component="div" role="list">
+            {cards.map((card) => {
+              const labelId = `checkbox-list-label-${card.id}`;
+              return (
+                <ListItem key={card.id} role={undefined} dense onClick={handleToggle(card.id)} >
+                  <Checkbox
+                    edge="start"
+                    checked={cards.includes(card)}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                  <ListItemText primary={card.url} />
+                </ListItem>
+              );
+            })}
+          </List>
+        </Paper> */}
     </div>
   );
 };
