@@ -3,7 +3,7 @@ import { TextField, Button, Paper, ListItemText, Checkbox, ListItem } from '@mui
 import TransferList from '../components/TransferList';
 import { List } from 'devextreme-react';
 
-const SelectCardsStep = ({ cards, isComplete, max }) => {
+const SelectCardsStep = ({ cards, setSelectedCardsUpper, setPassable, max }) => {
   const [selectedCards, setSelectedCards] = useState([]);
   const [cardSearchText, setCardSearchText] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -19,7 +19,8 @@ const SelectCardsStep = ({ cards, isComplete, max }) => {
     }
 
     setSelectedCards(newSelected);
-    isComplete(newSelected.length > 0 && newSelected.length <= max);
+    setSelectedCardsUpper(newSelected);
+    setPassable(newSelected.length > 0 && newSelected.length <= max);
     if (newSelected.length > max) {
       setErrorMessage(`You should select a maximum of ${max} cards!`);
     } else {

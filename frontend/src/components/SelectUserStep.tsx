@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { List, ListItem, Checkbox, TextField } from '@mui/material';
 
-const SelectCardsStep = ({ users, isComplete }) => {
+const SelectCardsStep = ({ setPassable, setUserUpper }) => {
   const [userAddress, setUserAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const regex = RegExp('^0x[a-fA-F0-9]{40}$');
 
   const handleAddressChange = (event) => {
     setUserAddress(event.target.value);
@@ -11,12 +12,13 @@ const SelectCardsStep = ({ users, isComplete }) => {
   };
 
   const checkCompletion = (address) => {
-    isComplete(address);
-    /*if (address) {
-      isComplete(true);
+    // setPassable(address);
+    if (address && regex.test(address)) {
+      setUserUpper(address)
+      setPassable(true);
     } else {
-     isComplete(false);
-    }*/
+     setPassable(false);
+    }
   };
 
   
