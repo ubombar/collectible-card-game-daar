@@ -10,7 +10,7 @@ const CreateCollectionStep = ({ isComplete, getMaxCardCount, setStepOneInputs })
     checkCompletion(event.target.value, maxCardCount);
 
     setStepOneInputs((old) => {
-      return {...old, name: event.target.value}
+      return { ...old, name: event.target.value }
     })
   };
 
@@ -19,7 +19,7 @@ const CreateCollectionStep = ({ isComplete, getMaxCardCount, setStepOneInputs })
     checkCompletion(collectionName, event.target.value);
 
     setStepOneInputs((old) => {
-      return {...old, maxnum: event.target.value}
+      return { ...old, maxnum: event.target.value }
     })
   };
 
@@ -28,7 +28,7 @@ const CreateCollectionStep = ({ isComplete, getMaxCardCount, setStepOneInputs })
       getMaxCardCount(maxCount);
       isComplete(true);
     } else {
-     isComplete(false);
+      isComplete(false);
     }
 
   };
@@ -36,12 +36,17 @@ const CreateCollectionStep = ({ isComplete, getMaxCardCount, setStepOneInputs })
   return (
     <div>
       <h2>Create a new collection</h2>
-      <TextField
+      {/* <TextField
         label="Collection Name"
         variant="outlined"
         value={collectionName}
         onChange={handleNameChange}
         fullWidth
+      /> */}
+      <TransferList
+        left={sets.filter((card) => card.url.toLowerCase().includes(cardSearchText.toLowerCase()))}
+        right={sets.filter((card) => selectedCards.includes(card.id))}
+        handleToggle={handleToggle}
       />
       <TextField
         label="Max Card Count"
