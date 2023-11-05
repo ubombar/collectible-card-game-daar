@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react'
-import styles from '../styles.module.css'
-import { Button, List, ListItem, Grid, Stack } from '@mui/material';
+import { useState } from 'react'
+import { Button, List, ListItem, Stack } from '@mui/material';
 import { useWallet } from "../utilities"
 import { BigNumber, ethers } from 'ethers';
 import * as Scry from "scryfall-sdk";
 import CardMTG from '../components/CardMTG';
-import { Item } from 'devextreme-react/list';
 
 export const BoosterPage = () => {
     const wallet = useWallet()
@@ -46,9 +44,7 @@ export const BoosterPage = () => {
 
     wallet?.mainContract.on("BoosterRedeemed", (resCardIds: string[], owner: string) => {
         // if not already in redeemedItems, add to redeemedItems
-        for (let i = 0; i < resCardIds.length; i++) {
-            setRedeemedItems([...redeemedItems, resCardIds[i]]);
-        }
+        setRedeemedItems([...redeemedItems, ...resCardIds]);
         setBoosters([]);
     })
 
@@ -100,17 +96,18 @@ export const BoosterPage = () => {
                 Trash All
             </Button>
             <p>List of your boosters:</p>
-            <List>
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
                 {boosters?.map((booster, index) => (
-                    <ListItem key={index}>
-                        {booster}
-                    </ListItem>
+                    // display booster image
                 ))}
-            </List>
+            </Stack>
             <h3>Rewards</h3>
+            <Button variant="contained" onClick={() => setRedeemedItems([])}>
+                Clear Rewards
+            </Button>
             <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
                 {redeemedItems?.map((id, index) => (
-                    <CardMTG key={index} id={id} />
+                    <CardMTG key={index} id={`${id}`} />
                 ))}
             </Stack>
         </>
