@@ -6,6 +6,7 @@ const deployer: DeployFunction = async hre => {
   const { deployer } = await hre.getNamedAccounts()
   const cardManagerAddress=await hre.deployments.deploy('CardManager', { from: deployer, log: true })
   await hre.deployments.deploy('Main', { from: deployer, log: true,  args: [cardManagerAddress.address]})
+  await hre.deployments.deploy('Market', { from: deployer, log: true,  args: [cardManagerAddress.address]})
 }
 
 
