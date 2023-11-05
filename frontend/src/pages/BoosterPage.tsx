@@ -4,6 +4,7 @@ import { useWallet } from "../utilities"
 import { BigNumber, ethers } from 'ethers';
 import * as Scry from "scryfall-sdk";
 import CardMTG from '../components/CardMTG';
+import ShowPath from '../components/ShowPath';
 
 export const BoosterPage = () => {
     const wallet = useWallet()
@@ -84,7 +85,8 @@ export const BoosterPage = () => {
 
     return (
         <>
-            <h3>Boosters</h3>
+            <h3>Booster Page</h3>
+            <ShowPath />
             <p>Click on a booster to collect it</p>
             <Button variant="contained" onClick={handleBuyBooster}>
                 Buy Booster
