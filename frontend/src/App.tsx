@@ -11,6 +11,7 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { UserInfoPage } from "./pages/UserInfoPage";
 import { CardInfoPage } from "./pages/CardInfoPage";
 import { CollectionInfoPage } from "./pages/CollectionInfoPage";
+import { BoosterPage } from "./pages/BoosterPage";
 
 type Canceler = () => void
 const useAffect = (
@@ -35,10 +36,10 @@ const useAffect = (
 export const App = () => {
   const wallet = useWallet()
   const adminAccount = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
-  
+
 
   const isEmptyAccount = !wallet?.details.account;
-  const isAdmin = wallet?.details.account ===adminAccount ;
+  const isAdmin = wallet?.details.account === adminAccount;
   console.log("app")
 
   return (
@@ -49,6 +50,7 @@ export const App = () => {
           <Route path="UserPage" element={<UserPage />} />
           <Route path="AdminPage" element={<AdminPage />} />
           <Route path="LoginPage" element={<LoginPage />} />
+          <Route path="BoosterPage" element={<BoosterPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="/UserInfoPage/:ID" element={<UserInfoPage />} />
@@ -56,8 +58,8 @@ export const App = () => {
         <Route path="/CollectionInfoPage/:ID" element={<CollectionInfoPage />} />
       </Routes>
     </BrowserRouter>
-    
-    
+
+
   );
 
 }
