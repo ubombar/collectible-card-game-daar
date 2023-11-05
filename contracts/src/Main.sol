@@ -18,10 +18,10 @@ contract Main is Ownable {
   event BoosterRedeemed(string[] cardIds, address redeemer);
   event BoosterBurned(uint256 boosterId, address burner);
 
-  constructor(address _cardManagerAddress) Ownable(msg.sender){
+  constructor(address _cardManagerAddress, address _marketAddress) Ownable(msg.sender){
     count = 0;
     cardManager = CardManager(_cardManagerAddress); 
-    marketManager = new Market(cardManager);
+    marketManager = Market(_marketAddress);
     boosterManager = new BoosterManager(owner(),cardManager);
   }
 

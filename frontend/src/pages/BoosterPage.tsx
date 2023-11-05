@@ -11,18 +11,18 @@ export const BoosterPage = () => {
     const [redeemedItems, setRedeemedItems] = useState<string[]>([]);
 
 
-    wallet?.contract.on("BoosterMinted", (boosterId: BigNumber) => {
+    wallet?.mainContract.on("BoosterMinted", (boosterId: BigNumber) => {
         // setBoosters and filter out duplicates
         setBoosters([...boosters.filter((id) => id !== boosterId.toNumber()), boosterId.toNumber()]);
     })
 
-    wallet?.contract.on("BoosterRedeemed", (resCardIds: string[], owner: string) => {
+    wallet?.mainContract.on("BoosterRedeemed", (resCardIds: string[], owner: string) => {
         // setRedeemedItems and filter out duplicates
         setRedeemedItems([...redeemedItems.filter((id) => !resCardIds.includes(id)), ...resCardIds]);
         setBoosters([]);
     })
 
-    wallet?.contract.on("BoosterBurned", (boosterId: BigNumber, owner: string) => {
+    wallet?.mainContract.on("BoosterBurned", (boosterId: BigNumber, owner: string) => {
         setBoosters([...boosters.filter((id) => id !== boosterId.toNumber())]);
     })
 
@@ -31,7 +31,7 @@ export const BoosterPage = () => {
         // retrieve booster cardIds from backend
         const cardIds = ["rare", "uncommon", "common"]//backend.getBoosterCardIds(enteredCode)
         // call mint booster function
-        wallet?.contract
+        wallet?.mainContract
             .mintBooster(cardIds, account, { value: ethers.utils.parseEther("1.0") })
             .catch(console.error)
     };
@@ -39,7 +39,7 @@ export const BoosterPage = () => {
     const handleCollectAll = () => {
         //call redeem booster function
         for (let i = 0; i < boosters.length; i++) {
-            wallet?.contract
+            wallet?.mainContract
                 .redeemBooster(boosters[i], account)
                 .catch(console.error)
         }
@@ -48,7 +48,7 @@ export const BoosterPage = () => {
     const handleBurnAll = () => {
         //call burn booster function
         for (let i = 0; i < boosters.length; i++) {
-            wallet?.contract
+            wallet?.mainContract
                 .burnBooster(boosters[i], account)
                 .catch(console.error)
         }
@@ -75,14 +75,7 @@ export const BoosterPage = () => {
                 <List>
                     {redeemedItems?.map((item, index) => (
                         <ListItem key={index}>
-                            <CardHeader title={item}></CardHeader>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia
-                                    sx={{ height: 140 }}
-                                    image="/static/images/cards/contemplative-reptile.jpg"
-                                    title="green iguana"
-                                />
-                            </Card>
+                            {item}
                         </ListItem>
                     ))}
                 </List>
