@@ -34,7 +34,7 @@ const allCards = [
       },
   ];
 
-export const CardPicker = ({lastPageMessage}) => {
+export const CardPicker = ({lastPageMessage, lastPageButton}) => {
     const [activeStep, setActiveStep] = useState(0);
     const [selectedCard, setSelectedCard] = useState({});
     const [passable, setPassable] = useState(false)
@@ -99,7 +99,7 @@ export const CardPicker = ({lastPageMessage}) => {
                                         color="primary"
                                         onClick={handleNext}
                                         disabled={!passable}>
-                                        {activeStep === steps.length - 1 ? 'Finish and Create Auction' : 'Next'}
+                                        {activeStep === steps.length - 1 ? lastPageButton : 'Next'}
                                     </Button>
                                 </div>
                             </div>
