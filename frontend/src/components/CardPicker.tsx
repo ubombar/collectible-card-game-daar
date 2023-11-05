@@ -12,10 +12,11 @@ import { SingleBed } from "@mui/icons-material";
 import SingleCardSelectorStep from "@/components/SingleCardSelectorStep";
 import { ApproveCardForTransferStep } from "@/components/ApproveCardFortransfer";
 import { ReturBackToAuctionsStep } from "@/components/ReturBackToAuctionsStep";
+import { ethers } from "ethers";
 
 const steps = ['Select the card for exchange', 'Approve the card', 'Return back to the auctions'];
 
-const allCards = [
+const allCardsMock = [
     {
         id: 1,
         url: "aaa"
@@ -35,10 +36,19 @@ const allCards = [
   ];
 
 export const CardPicker = ({lastPageMessage, lastPageButton}) => {
+    const [allCards, setAllCards] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [selectedCard, setSelectedCard] = useState({});
     const [passable, setPassable] = useState(false)
     const navigate = useNavigate()
+    const wallet = useWallet();
+
+    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((cardArray: {id: string, tokenId: ethers.BigNumber}[]) => {
+        cardArray = cardArray.map((card) => {
+            return { ...card, ...{tokenId: card.tokenId.toNumber()} }
+        })
+        setAllCards(cardArray);
+    })
 
     const handleNext = () => {
         if (activeStep <= 1) {

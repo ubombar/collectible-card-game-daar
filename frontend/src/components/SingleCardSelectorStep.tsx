@@ -31,7 +31,7 @@ const SingleCardSelectorStep = ({ cards, setPassable, setSelectedCardUpper }) =>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paper elevation={2} style={{ width: '600px', margin: '20px' }}>
                     <List dense component="div" role="list">
-                        {cards.filter((card) => {return cardSearchText.length == 0 || card.url.includes(cardSearchText)}).map((card) => {
+                        {cards.filter((card) => {return cardSearchText.length == 0 || card.id.includes(cardSearchText)}).map((card) => {
                             const labelId = `checkbox-list-label-${card.id}`;
                             return (
 
