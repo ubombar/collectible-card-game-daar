@@ -98,7 +98,7 @@ export const BoosterPage = () => {
             <p>List of your boosters:</p>
             <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
                 {boosters?.map((booster, index) => (
-                    // display booster image
+                    { booster}
                 ))}
             </Stack>
             <h3>Rewards</h3>
