@@ -239,8 +239,8 @@ contract Market is IMarket {
 
         _auctions[_auctionId] = info;
 
-        _cardManager.setApprovalForAll(msg.sender, true);
-        _cardManager.approve(address(this), _tokenId);
+        // _cardManager.setApprovalForAll(msg.sender, true);
+        // _cardManager.approve(address(this), _tokenId);
 
         emit AuctionNewOffer(_auctionId, msg.sender);
     }

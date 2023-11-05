@@ -6,16 +6,18 @@ import AuctionCard from './AuctionCard';
 import { useWallet } from '@/utilities';
 
 export const ApproveCardForTransferStep = ({ setPassable, selectedCard }) => {
-    const [approved, setApproved] = useState(false);
     const wallet = useWallet();
+    const [approved, setApproved] = useState(false);
     function handleApproveClick() {
         // Call to the CardContact
         // Then make the passableTrue
-        wallet?.cardmanagerContract.approve(wallet?.cardmanagerContract.address, selectedCard.tokenId).then(() => {
-            console.log("Approved!");
-            // For now just approve
-            setPassable(true)
+        wallet?.cardmanagerContract.approve(wallet.marketContract.address, selectedCard.tokenId).then((r) => {
+            handleApproveClickCheckbox()
         })
+
+        console.log("Approved!");
+        // For now just approve
+        
     }
 
     function handleApproveClickCheckbox() {

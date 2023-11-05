@@ -8,12 +8,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AuctionCard from "./AuctionCard";
 
+// auctionId: auctionId,
+// statusInt: statusInt,
+// status: statusToString[statusInt],
+// sellerAddress: await wallet.marketContract.sellerOf(auctionId),
+// biddderAddress: await wallet.marketContract.currentBidderOf(auctionId),
+// sellersToken: await wallet.marketContract.sellersTokenIdOf(auctionId),
+// biddersToken: await wallet.marketContract.currentBiddersTokenIdOf(auctionId),
+// hasBidder: biddersAddress.includes("0x0000000000000000000000000000000000000000"),
 
 const AuctionView = ({auctionCollection, navigate}) => {
     const [searchText, setSearchText] = useState('');
     const filteredCollections = auctionCollection
                   .filter((collection) => {
-                    return collection.cardName.toLowerCase().includes(searchText.toLowerCase());
+                    return collection.sellersToken.toLowerCase().includes(searchText.toLowerCase());
                   });
     return (
         <Grid container spacing={0}>

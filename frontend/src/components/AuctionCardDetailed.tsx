@@ -4,7 +4,8 @@ import { CardContent, CardActions, Typography, Button, Paper, Grid } from '@mui/
 
 
 
-export default function AuctionCardDetailed({ data: { cardName, biddedCardName, from, bidder, biddersTokenId, sellersTokenId, auctionId }, navigate, noBidder, showOffer }) {
+export default function AuctionCardDetailed({ data: { auctionId, statusInt, status, sellerAddress, biddderAddress, sellersToken, biddersToken, hasBidder }, navigate, noBidder, showOffer }) {
+    noBidder = !hasBidder;
     const theme = useTheme();
 
     return (
@@ -14,13 +15,13 @@ export default function AuctionCardDetailed({ data: { cardName, biddedCardName, 
                     <Grid item xs={6}>
                         <CardContent>
                             <Typography variant="h5" component="div">
-                                Auctioned Card: <a href={"/CardInfoPage/" + cardName}>{cardName}</a>
+                                Auctioned Card: <a href={"/CardInfoPage/" + sellersToken}>{sellersToken}</a>
                             </Typography>
                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                From: <a href={"/UserInfoPage/" + from}>{from}</a>
+                                From: <a href={"/UserInfoPage/" + sellerAddress}>{sellerAddress}</a>
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                TokenId: {sellersTokenId}
+                                TokenId: {sellersToken}
                             </Typography>
                         </CardContent>
                     </Grid>
@@ -44,13 +45,13 @@ export default function AuctionCardDetailed({ data: { cardName, biddedCardName, 
                         <Grid item xs={6}>
                             <CardContent>
                                 <Typography variant="h5" component="div">
-                                    Offered Card: <a href={"/CardInfoPage/" + biddedCardName}>{biddedCardName}</a>
+                                    Offered Card: <a href={"/CardInfoPage/" + biddersToken}>{biddersToken}</a>
                                 </Typography>
                                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                    From: <a href={"/UserInfoPage/" + from}>{bidder}</a>
+                                    From: <a href={"/UserInfoPage/" + biddderAddress}>{biddderAddress}</a>
                                 </Typography>
                                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                    TokenId: {biddersTokenId}
+                                    TokenId: {biddersToken}
                                 </Typography>
                             </CardContent>
                         </Grid>

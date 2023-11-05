@@ -4,7 +4,7 @@ import { useWallet } from '@/utilities';
 import styles from '../../styles.module.css'
 import { Button, Grid, ListItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AuctionView from '@/components/AuctionView';
 import { Stepper, Step, StepLabel, Typography, Container } from '@mui/material';
@@ -35,7 +35,7 @@ const allCardsMock = [
     },
 ];
 
-export const CardPicker = ({ lastPageMessage, lastPageButton }) => {
+export const CardPicker = ({ lastPageMessage, lastPageButton, bidding, auctionId }) => {
     const [allCards, setAllCards] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [selectedCard, setSelectedCard] = useState({ tokenId: -1 });
@@ -43,29 +43,43 @@ export const CardPicker = ({ lastPageMessage, lastPageButton }) => {
     const navigate = useNavigate()
     const wallet = useWallet();
 
-    wallet?.cardmanagerContract.userToCards(wallet.details.account).then((cardArray: { id: string, tokenId: ethers.BigNumber }[]) => {
-        cardArray = cardArray.map((card) => {
-            return { tokenId: card.tokenId.toNumber(), url: card.id, id: card.tokenId.toNumber() }
-        })
+    useEffect(() => {
+        wallet?.cardmanagerContract.userToCards(wallet.details.account).then((stringOfNames: string[]) => {
+            console.log(stringOfNames);
 
-        setAllCards(cardArray);
-    })
+            stringOfNames = stringOfNames.map((cccc) => {
+                return {
+                    id: cccc[0],
+                    url: cccc[0],
+                    tokenId: cccc[1].toNumber(),
+                }
+            })
+
+            console.log(stringOfNames);
+
+            setAllCards([...stringOfNames]);
+        })
+    }, [wallet])
 
     const handleNext = () => {
         if (activeStep <= 1) {
             setActiveStep(activeStep + 1);
             setPassable(false);
         } else {
-            // Call the create auction here!
-            console.log(selectedCard);
+            if (bidding) {
+                wallet?.marketContract.offer(auctionId, selectedCard.tokenId).then((r) => {
+                    console.log("Offered!");
 
-            wallet?.marketContract.open(selectedCard.tokenId).then((r) => {
-                navigate("/UserPage/AuctionPage")
-            })
+                    navigate("/UserPage/AuctionPage")
+                })
+            } else {
+                // Call the create auction here!
+                wallet?.marketContract.open(selectedCard.tokenId).then((r) => {
+                    console.log(r);
 
-            // wallet?.marketContract.list().then((e) => {
-            //     console.log(e);
-            // })
+                    navigate("/UserPage/AuctionPage")
+                })
+            }
         }
     };
 
